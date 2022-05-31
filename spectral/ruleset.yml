@@ -1,18 +1,24 @@
+# TODO move aliases to .spectral.yml
+aliases:
+  PathItemObject:
+    - $.paths[*]
+  OperationObject:
+    - "#PathItemObject[get,put,post,delete,options,head,patch,trace]"
 rules:
-  array-params-must-have-items-with-type:
-    description: Array parameters must have an items attribute with a type
-    given: $..*.parameters[*]
-    message: '{{error}}'
-    severity: error
-    then:
-      function: ensureAllArraysHaveItemTypes
-  array-properties-must-have-items-with-type:
-    description: Array properties must have an items attribute with a type
-    given: $..*.properties[*]
-    message: '{{error}}'
-    severity: error
-    then:
-      function: ensureAllArraysHaveItemTypes
+#  array-params-must-have-items-with-type:
+#    description: Array parameters must have an items attribute with a type
+#    given: $..*.parameters[*]
+#    message: '{{error}}'
+#    severity: error
+#    then:
+#      function: ensureAllArraysHaveItemTypes
+#  array-properties-must-have-items-with-type:
+#    description: Array properties must have an items attribute with a type
+#    given: $..*.properties[*]
+#    message: '{{error}}'
+#    severity: error
+#    then:
+#      function: ensureAllArraysHaveItemTypes
   common-responses-not-found:
     description: Responses should contain common response - 404 (not found)
     given: $.paths[?(@property.match(/.*\/{.*}.*/))]..responses
@@ -76,21 +82,21 @@ rules:
       function: pattern
       functionOptions:
         match: ^resources/.*yml$
-  example-key-must-be-snake-cased:
-    description: example key must be snake cased (e.g. snake_case)
-    given: $.components['examples'].*~
-    message: '{{error}}'
-    severity: error
-    then:
-      function: ensureSnakeCaseWithDigits
-    type: style
-  headers-must-include-examples:
-    description: Headers must include examples
-    given: $..headers.*
-    message: '{{description}}; missing {{property}}'
-    severity: error
-    then:
-      function: ensurePropertiesExample
+#  example-key-must-be-snake-cased:
+#    description: example key must be snake cased (e.g. snake_case)
+#    given: $.components['examples'].*~
+#    message: '{{error}}'
+#    severity: error
+#    then:
+#      function: ensureSnakeCaseWithDigits
+#    type: style
+#  headers-must-include-examples:
+#    description: Headers must include examples
+#    given: $..headers.*
+#    message: '{{description}}; missing {{property}}'
+#    severity: error
+#    then:
+#      function: ensurePropertiesExample
   http-verbs-should-be-used:
     description: >-
       HTTP verbs should be used to express different actions or functions on a
@@ -208,22 +214,22 @@ rules:
       functionOptions:
         type: snake
     type: style
-  operationid-must-follow-naming-conventions:
-    description: operationIds must follow naming conventions for method
-    given: $.paths[*][*]
-    message: '{{error}}'
-    severity: error
-    then:
-      function: validateOperationIdNaming
-    type: style
-  parameter-key-must-be-snake-cased:
-    description: parameter key must be snake cased (e.g. snake_case)
-    given: $.components['parameters'].*~
-    message: '{{error}}'
-    severity: error
-    then:
-      function: ensureSnakeCaseWithDigits
-    type: style
+#  operationid-must-follow-naming-conventions:
+#    description: operationIds must follow naming conventions for method
+#    given: $.paths[*][*]
+#    message: '{{error}}'
+#    severity: error
+#    then:
+#      function: validateOperationIdNaming
+#    type: style
+#  parameter-key-must-be-snake-cased:
+#    description: parameter key must be snake cased (e.g. snake_case)
+#    given: $.components['parameters'].*~
+#    message: '{{error}}'
+#    severity: error
+#    then:
+#      function: ensureSnakeCaseWithDigits
+#    type: style
   params-must-include-examples:
     description: Parameters must include examples
     given: $..parameters.*
@@ -288,13 +294,13 @@ rules:
         function: length
         functionOptions:
           min: 1
-  properties-must-include-examples:
-    description: Object properties must include examples
-    given: $..properties..properties.*
-    message: '{{error}}'
-    severity: error
-    then:
-      function: ensurePropertiesExample
+#  properties-must-include-examples:
+#    description: Object properties must include examples
+#    given: $..properties..properties.*
+#    message: '{{error}}'
+#    severity: error
+#    then:
+#      function: ensurePropertiesExample
   ratelimit-headers:
     description: Response must include ratelimit-x headers
     given: $..responses.*
@@ -307,22 +313,22 @@ rules:
         function: truthy
       - field: headers.ratelimit-reset
         function: truthy
-  response-key-must-be-snake-cased:
-    description: response key must be snake cased (e.g. snake_case)
-    given: $.components['responses'].*~
-    message: '{{error}}'
-    severity: error
-    then:
-      function: ensureSnakeCaseWithDigits
-    type: style
-  schema-key-must-be-snake-cased:
-    description: schema key must be snake cased (e.g. snake_case)
-    given: $.components['schemas'].*~
-    message: '{{error}}'
-    severity: error
-    then:
-      function: ensureSnakeCaseWithDigits
-    type: style
+#  response-key-must-be-snake-cased:
+#    description: response key must be snake cased (e.g. snake_case)
+#    given: $.components['responses'].*~
+#    message: '{{error}}'
+#    severity: error
+#    then:
+#      function: ensureSnakeCaseWithDigits
+#    type: style
+#  schema-key-must-be-snake-cased:
+#    description: schema key must be snake cased (e.g. snake_case)
+#    given: $.components['schemas'].*~
+#    message: '{{error}}'
+#    severity: error
+#    then:
+#      function: ensureSnakeCaseWithDigits
+#    type: style
   servers-must-match-api-standards:
     description: Schema and host in URL must match company API standards
     given: $.servers..url

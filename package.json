@@ -6,6 +6,8 @@
   "scripts": {
     "document-ruleset": "node utils/documentRuleset.js ./spectral/ruleset.yml",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test-spectral": "",
+    "validate": "./node_modules/@stoplight/spectral-cli/dist/index.js lint petstore.yaml --ruleset=.spectral.yml --verbose",
     "prettier": "prettier --write --ignore-unknown ./**/*",
     "sort-rules": "yaml-sort --input ./spectral/ruleset.yml"
   },

@@ -4,12 +4,12 @@ extends:
 
 functionsDir: ./spectral/functions
 
-#functions:
-#  - ensurePropertiesExample
-#  - ensureAllArraysHaveItemTypes
-#  - ensureSnakeCaseWithDigits
-#  - validateOperationIdNaming
-#
+functions:
+  - ensurePropertiesExample
+  - ensureAllArraysHaveItemTypes
+  - ensureSnakeCaseWithDigits
+  - validateOperationIdNaming
+
 rules:
   contact-properties: off
 #  operation-default-response: off
