@@ -1,13 +1,13 @@
-const yaml = require('js-yaml');
-const fs = require('fs');
-const _ = require('lodash');
+const yaml = require("js-yaml");
+const fs = require("fs");
+const _ = require("lodash");
 
-const filePath = process.argv[2] || './spectral/ruleset.yml';
-const outputFilePath = process.argv[3] || './rules.md';
+const filePath = process.argv[2] || "./spectral/ruleset.yml";
+const outputFilePath = process.argv[3] || "./rules.md";
 
 const parseRule = (val, key) => ({
   key,
-  ...val
+  ...val,
 });
 
 const mapRuleToRuleDoc = (rule) => {
@@ -19,20 +19,23 @@ const mapRuleToRuleDoc = (rule) => {
 
 const writeRuleDoc = (ruleDocArray) => {
   try {
-    let rulesContentString = `# BetterCloud OAS Standard Rules\n\n${_.join(ruleDocArray, '\n')}`;
+    let rulesContentString = `# BetterCloud OAS Standard Rules\n\n${_.join(
+      ruleDocArray,
+      "\n"
+    )}`;
     fs.writeFileSync(outputFilePath, rulesContentString);
     const stats = fs.statSync(outputFilePath);
     console.log(`Readme size ${stats.size}`);
     //file written successfully
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
 };
 
 try {
-  const doc = yaml.load(fs.readFileSync(filePath, 'utf8'));
+  const doc = yaml.load(fs.readFileSync(filePath, "utf8"));
 
-  const rules = _.map(_.get(doc, 'rules', {}), parseRule);
+  const rules = _.map(_.get(doc, "rules", {}), parseRule);
 
   // console.debug(rules);
   writeRuleDoc(_.map(rules, mapRuleToRuleDoc));

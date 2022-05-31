@@ -7,11 +7,17 @@
  */
 
 module.exports = (param, _, paths) => {
-  const re = RegExp('^[a-z0-9_]+$');
+  const re = RegExp("^[a-z0-9_]+$");
 
-  if (re.test(param)) { return }
+  if (re.test(param)) {
+    return;
+  }
 
-  return [{
-    message: `${paths.target ? paths.target.join('.') : 'property'} is not snake_case`
-  }]
-}
+  return [
+    {
+      message: `${
+        paths.target ? paths.target.join(".") : "property"
+      } is not snake_case`,
+    },
+  ];
+};
