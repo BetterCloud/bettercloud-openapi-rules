@@ -1,0 +1,16 @@
+extends:
+  - spectral:oas
+  - ./spectral/ruleset.yml
+
+functionsDir: ./spectral/functions
+
+#functions:
+#  - ensurePropertiesExample
+#  - ensureAllArraysHaveItemTypes
+#  - ensureSnakeCaseWithDigits
+#  - validateOperationIdNaming
+#
+rules:
+  contact-properties: off
+#  operation-default-response: off
+  operation-singular-tag: off

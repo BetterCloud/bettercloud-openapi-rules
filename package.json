@@ -1,0 +1,34 @@
+{
+  "name": "bettercloud-openapi-rules",
+  "version": "1.0.0",
+  "description": "Enforcement of API specs",
+  "main": "index.js",
+  "scripts": {
+    "document-ruleset": "node utils/documentRuleset.js ./spectral/ruleset.yml",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier --write --ignore-unknown ./**/*",
+    "sort-rules": "yaml-sort --input ./spectral/ruleset.yml"
+  },
+  "keywords": [
+    "spectral",
+    "openapi"
+  ],
+  "author": "devx@bettercloud.com",
+  "license": "ISC",
+  "dependencies": {
+    "@stoplight/spectral": "^6.1.0",
+    "@stoplight/spectral-cli": "^6.4.0",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
+    "prettier": "^2.6.2",
+    "yaml-sort": "^1.2.1"
+  },
+  "devDependencies": {
+    "pre-commit": "^1.2.2"
+  },
+  "pre-commit": [
+    "prettier",
+    "sort-rules",
+    "document-ruleset"
+  ]
+}

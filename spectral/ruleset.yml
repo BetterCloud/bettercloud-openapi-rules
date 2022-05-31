@@ -1,0 +1,337 @@
+rules:
+  array-params-must-have-items-with-type:
+    description: Array parameters must have an items attribute with a type
+    given: $..*.parameters[*]
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureAllArraysHaveItemTypes
+  array-properties-must-have-items-with-type:
+    description: Array properties must have an items attribute with a type
+    given: $..*.properties[*]
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureAllArraysHaveItemTypes
+  common-responses-not-found:
+    description: Responses should contain common response - 404 (not found)
+    given: $.paths[?(@property.match(/.*\/{.*}.*/))]..responses
+    message: '{{description}}. Missing {{property}}'
+    severity: error
+    then:
+      - field: '404'
+        function: truthy
+  common-responses-server-error:
+    description: Responses should contain common response - 500 (server error)
+    given: $.paths..responses
+    message: '{{description}}. Missing {{property}}'
+    severity: error
+    then:
+      - field: '500'
+        function: truthy
+  common-responses-too-many-requests:
+    description: Responses should contain common response - 429 (too many requests)
+    given: $.paths..responses
+    message: '{{description}}. Missing {{property}}'
+    severity: error
+    then:
+      - field: '429'
+        function: truthy
+  common-responses-unauthorized:
+    description: Responses should contain common response - 401 (unauthorized)
+    given: $.paths..responses
+    message: '{{description}}. Missing {{property}}'
+    severity: error
+    then:
+      - field: '401'
+        function: truthy
+  contact-information:
+    description: Every API must have a contact containing name, email and a url
+    given: $.info.contact
+    message: '{{description}}; property {{property}} is missing'
+    severity: error
+    then:
+      - field: name
+        function: truthy
+      - field: email
+        function: truthy
+      - field: url
+        function: truthy
+  endpoint-must-be-ref:
+    description: Endpoint must be a $ref
+    given: $.paths.*.*
+    message: '{{description}}; {{property}} incorrect'
+    resolved: false
+    severity: error
+    then:
+      - field: $ref
+        function: truthy
+  endpoint-ref-must-be-file:
+    description: Endpoint must a $ref to a file in resources/
+    given: $.paths.*.$ref
+    message: '{{description}}; {{value}} incorrect'
+    resolved: false
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^resources/.*yml$
+  example-key-must-be-snake-cased:
+    description: example key must be snake cased (e.g. snake_case)
+    given: $.components['examples'].*~
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureSnakeCaseWithDigits
+    type: style
+  headers-must-include-examples:
+    description: Headers must include examples
+    given: $..headers.*
+    message: '{{description}}; missing {{property}}'
+    severity: error
+    then:
+      function: ensurePropertiesExample
+  http-verbs-should-be-used:
+    description: >-
+      HTTP verbs should be used to express different actions or functions on a
+      resource
+    given: $.paths[?(!@property.match(/well-known/ig))]
+    message: '{{description}}; The HTTP verb {{property}} is missing.'
+    severity: error
+    then:
+      - field: get
+        function: truthy
+      - field: post
+        function: truthy
+      - field: put
+        function: truthy
+      - field: patch
+        function: truthy
+      - field: delete
+        function: truthy
+  info-description:
+    description: Every API must have a global description
+    given: $.info
+    message: >-
+      OpenAPI object info `description` must be present and at least 100 chars
+      long.
+    severity: error
+    then:
+      - field: description
+        function: truthy
+      - field: description
+        function: length
+        functionOptions:
+          min: 100
+  must-define-example-schema:
+    description: Every DTO must define at least one example
+    given: $.paths[?(!@property.match(/well-known/ig))]..content.*
+    message: '{{description}}; DTO is lacking an example {{path}}'
+    severity: error
+    then:
+      - function: xor
+        functionOptions:
+          properties:
+            - example
+            - examples
+  must-have-content-type:
+    description: Every response must specify its content type
+    given: $.paths[?(!@property.match(/well-known/ig))]..content
+    message: >-
+      {{description}}; property {{property}} is missing or not a valid
+      content-type
+    severity: error
+    then:
+      - field: '@key'
+        function: truthy
+      - field: '@key'
+        function: pattern
+        functionOptions:
+          match: /
+  must-have-path:
+    description: Every API must have at least one path
+    given: $
+    message: '{{description}}; property `paths` is empty'
+    severity: error
+    then:
+      - field: paths
+        function: length
+        functionOptions:
+          min: 1
+  must-have-response-body:
+    description: >-
+      Every route returning a http status code of 200 or 201 must have a
+      response body defined
+    given: >-
+      $.paths[?(!@property.match(/well-known/ig))]..responses[200,201,"200","201"]
+    message: '{{description}}; property {{property}} is missing at path: {{path}}'
+    severity: error
+    then:
+      - field: content
+        function: truthy
+      - field: description
+        function: truthy
+  no-http-verbs-in-resources:
+    description: >-
+      The HTTP Verbs should not be used in the route path to define different
+      actions on a resource
+    given: $.paths[?(!@property.match(/well-known/ig))]~
+    message: >-
+      {{description}}; {{property}} Instead use HTTP verbs to define actions on
+      a resource. Example: PUT - /digital-twin/api/v1/products/42
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: \/(get|post|put|patch|delete)(\/|$)
+  operation-id-camel-case:
+    description: >-
+      Operation IDs must be camelCase since some generators (e.g. RTK Query)
+      don't support kebab-cases.
+    given: '#OperationObject'
+    message: >-
+      Operation ID "{{value}}" must be camelCase since some generators (e.g. RTK
+      Query) don't support kebab-cases.
+    severity: error
+    then:
+      field: operationId
+      function: casing
+      functionOptions:
+        type: camel
+  operationid-must-be-snake-cased:
+    description: operationIds must be snake cased (e.g. snake_case)
+    given: $..operationId
+    message: '{{description}}; {{value}} incorrect'
+    severity: error
+    then:
+      function: casing
+      functionOptions:
+        type: snake
+    type: style
+  operationid-must-follow-naming-conventions:
+    description: operationIds must follow naming conventions for method
+    given: $.paths[*][*]
+    message: '{{error}}'
+    severity: error
+    then:
+      function: validateOperationIdNaming
+    type: style
+  parameter-key-must-be-snake-cased:
+    description: parameter key must be snake cased (e.g. snake_case)
+    given: $.components['parameters'].*~
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureSnakeCaseWithDigits
+    type: style
+  params-must-include-examples:
+    description: Parameters must include examples
+    given: $..parameters.*
+    message: '{{description}}; missing {{property}}'
+    severity: error
+    then:
+      function: xor
+      functionOptions:
+        properties:
+          - example
+          - examples
+  path-description-is-mandatory:
+    description: Every route of an API should have a description
+    given: $.paths[?(!@property.match(/well-known/ig))]
+    message: '{{description}}; property: {{property}} is missing'
+    severity: error
+    then:
+      - field: description
+        function: truthy
+  path-dto-reference:
+    description: >-
+      DTOs should be used to specify the schema(data types) of a request /
+      response
+    given: $.components.schemas
+    message: '{{description}}; property {{property}} is missing'
+    severity: error
+    then:
+      - function: length
+        functionOptions:
+          min: 1
+  path-must-include-version:
+    description: Path must include the version
+    given: $.paths[*]~
+    message: '{{description}}; {{property}} incorrect'
+    resolved: false
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^/v2/.*$
+  path-must-match-api-standards:
+    description: API Path must match company API uri standards
+    given: $.paths[?(!@property.match(/well-known/ig))~]
+    message: >-
+      {{description}}; {{property}} incorrect. Example:
+      /digital-twin/api/v1/products
+    resolved: false
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^\/([a-z-]+)\/api\/(v[1-9])\/([a-z]+(\w+s\b.*))
+  path-must-specify-tags:
+    description: Every route must specify at least one tag it belongs to
+    given: $.paths[?(!@property.match(/well-known/ig))].*
+    message: '{{description}}; property tags is missing at: {{path}}'
+    severity: error
+    then:
+      - field: tags
+        function: truthy
+      - field: tags
+        function: length
+        functionOptions:
+          min: 1
+  properties-must-include-examples:
+    description: Object properties must include examples
+    given: $..properties..properties.*
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensurePropertiesExample
+  ratelimit-headers:
+    description: Response must include ratelimit-x headers
+    given: $..responses.*
+    message: '{{description}}; missing {{property}}'
+    severity: error
+    then:
+      - field: headers.ratelimit-limit
+        function: truthy
+      - field: headers.ratelimit-remaining
+        function: truthy
+      - field: headers.ratelimit-reset
+        function: truthy
+  response-key-must-be-snake-cased:
+    description: response key must be snake cased (e.g. snake_case)
+    given: $.components['responses'].*~
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureSnakeCaseWithDigits
+    type: style
+  schema-key-must-be-snake-cased:
+    description: schema key must be snake cased (e.g. snake_case)
+    given: $.components['schemas'].*~
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureSnakeCaseWithDigits
+    type: style
+  servers-must-match-api-standards:
+    description: Schema and host in URL must match company API standards
+    given: $.servers..url
+    message: >-
+      {{description}}; {{property}}:{{value}} incorrect. Example:
+      https://api.bettercloud.com/automation/v1/actions
+    resolved: false
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^((http[s]?):\/\/)([a-z]+)([.+])bettercloud.com
