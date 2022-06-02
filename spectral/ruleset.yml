@@ -1,4 +1,3 @@
-# TODO move aliases to .spectral.yml
 aliases:
   OperationObject:
     - '#PathItemObject[get,put,post,delete,options,head,patch,trace]'
@@ -191,12 +190,12 @@ rules:
         type: camel
   operationid-must-follow-naming-conventions:
     description: operationIds must follow naming conventions for method
-    type: style
     given: $.paths[*]
     message: '{{error}}'
     severity: error
     then:
       function: validateOperationIdNaming
+    type: style
   parameter-key-must-be-snake-cased:
     description: parameter key must be snake cased (e.g. snake_case)
     given: $.components['parameters'].*~
@@ -295,4 +294,5 @@ rules:
     then:
       function: pattern
       functionOptions:
-        match: ^((https):\/\/)([a-z-]+)([.]+)([a-z]?)bettercloud.com\/[a-z-]+\/v[1-9]+$
+        match: >-
+          ^((https):\/\/)([a-z-]+)([.]+)([a-z]?)bettercloud.com\/[a-z-]+\/v[1-9]+$

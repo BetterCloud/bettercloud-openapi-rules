@@ -4,7 +4,7 @@
  * in order to maintain consistency.
  *
  */
-const _ = require('lodash');
+const _ = require("lodash");
 
 const METHODS = ["get", "post", "put", "patch", "delete"];
 const DELETE = ["delete", "destroy", "remove", "purge", "untag"];
@@ -101,14 +101,19 @@ const validateOperation = (method, path, operationId) => {
       ];
     }
   }
-}
+};
 
 module.exports = (endpoint, options, { path }) => {
-  return _.filter(_.flatten(_.map(endpoint, (endpointObject, method) => {
-    if (METHODS.includes(_.toLower(method))) {
-      return validateOperation(method, 'path', endpointObject.operationId);
-    } else {
-      return null;
-    }
-  })), _.negate(_.isNil));
+  return _.filter(
+    _.flatten(
+      _.map(endpoint, (endpointObject, method) => {
+        if (METHODS.includes(_.toLower(method))) {
+          return validateOperation(method, "path", endpointObject.operationId);
+        } else {
+          return null;
+        }
+      })
+    ),
+    _.negate(_.isNil)
+  );
 };
