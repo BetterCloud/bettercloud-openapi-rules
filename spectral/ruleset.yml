@@ -9,17 +9,6 @@ functions:
   - ensureSnakeCaseWithDigits
   - validateOperationIdNaming
 rules:
-  open-api-version:
-    description: >-
-      OAS files must adhere to an openapi version of 3.0.x. All other versions
-      are not authorized
-    given: $.openapi
-    message: '{{description}}'
-    severity: error
-    then:
-      function: pattern
-      functionOptions:
-        match: ^(3\.)(0\.)(\d+)$
   array-params-must-have-items-with-type:
     description: Array parameters must have an items attribute with a type
     given: $..*.parameters[*]
@@ -185,6 +174,17 @@ rules:
       function: pattern
       functionOptions:
         notMatch: \/(get|post|put|patch|delete)(\/|$)
+  open-api-version:
+    description: >-
+      OAS files must adhere to an openapi version of 3.0.x. All other versions
+      are not authorized
+    given: $.openapi
+    message: '{{description}}'
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^(3\.)(0\.)(\d+)$
   operation-id-camel-case:
     description: >-
       Operation IDs must be camelCase since some generators (e.g. RTK Query)
