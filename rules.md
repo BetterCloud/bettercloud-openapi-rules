@@ -34,6 +34,8 @@ Every API must have at least one path</details>
 Every route returning a http status code of 200 or 201 must have a response body defined</details>
 <details><summary>no-http-verbs-in-resources (error)</summary>
 The HTTP Verbs should not be used in the route path to define different actions on a resource</details>
+<details><summary>open-api-version (error)</summary>
+OAS files must adhere to an openapi version of 3.0.x. All other versions are not authorized</details>
 <details><summary>operation-id-camel-case (error)</summary>
 Operation IDs must be camelCase since some generators (e.g. RTK Query) don't support kebab-cases.</details>
 <details><summary>operationid-must-follow-naming-conventions (error)</summary>
