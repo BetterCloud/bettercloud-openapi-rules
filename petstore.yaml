@@ -1,15 +1,21 @@
 openapi: "3.0.0"
 info:
+  description: "This is a sample OAS file used to validate the spectral ruleset is in a valid state. This was based of Swagger's Pet Store."
   version: 1.0.0
   title: Swagger Petstore
   license:
     name: MIT
+  contact:
+    email: "devx@bettercloud.com"
+    name: "DevX"
 servers:
-  - url: http://petstore.swagger.io/v1
+  - url: https://petstore.bettercloud.com/capability/v1
 paths:
   /pets:
+    description: "Operations for the Pet resource"
     get:
       summary: List all pets
+      description: "List all pets"
       operationId: listPets
       tags:
         - pets
@@ -21,6 +27,7 @@ paths:
           schema:
             type: integer
             format: int32
+          example: 25
       responses:
         '200':
           description: A paged array of pets
@@ -41,6 +48,7 @@ paths:
                 $ref: "#/components/schemas/Error"
     post:
       summary: Create a pet
+      description: "Creates a pet resource"
       operationId: createPets
       tags:
         - pets
@@ -54,9 +62,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
   /pets/{petId}:
+    description: "Operations for a specific pet identified by petId"
     get:
       summary: Info for a specific pet
-      operationId: showPetById
+      description: "Retrieve details for a specific pet"
+      operationId: getPetById
       tags:
         - pets
       parameters:
@@ -66,6 +76,7 @@ paths:
           description: The id of the pet to retrieve
           schema:
             type: string
+            example: "1234"
       responses:
         '200':
           description: Expected response to a valid request

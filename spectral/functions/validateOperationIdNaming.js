@@ -4,7 +4,9 @@
  * in order to maintain consistency.
  *
  */
+const _ = require('lodash');
 
+const METHODS = ["get", "post", "put", "patch", "delete"];
 const DELETE = ["delete", "destroy", "remove", "purge", "untag"];
 const GET = ["get", "list"];
 const PATCH = ["patch"];
@@ -26,11 +28,9 @@ const PUT = ["update"];
 
 const articles = ["_a_", "_an_", "_the_"];
 
-module.exports = (endpoint, _, { given }) => {
-  const path = given[1];
-  const method = given[2];
-  const operationId = endpoint.operationId;
-  const prefix = operationId.split("_")[0];
+const validateOperation = (method, path, operationId) => {
+  // expects camelCase, gets the substring up to first capital
+  const prefix = operationId.split(/(?=[A-Z])/)[0];
 
   switch (method) {
     case "delete":
@@ -101,4 +101,14 @@ module.exports = (endpoint, _, { given }) => {
       ];
     }
   }
+}
+
+module.exports = (endpoint, options, { path }) => {
+  return _.filter(_.flatten(_.map(endpoint, (endpointObject, method) => {
+    if (METHODS.includes(_.toLower(method))) {
+      return validateOperation(method, 'path', endpointObject.operationId);
+    } else {
+      return null;
+    }
+  })), _.negate(_.isNil));
 };

@@ -1,24 +1,29 @@
 # TODO move aliases to .spectral.yml
 aliases:
+  OperationObject:
+    - '#PathItemObject[get,put,post,delete,options,head,patch,trace]'
   PathItemObject:
     - $.paths[*]
-  OperationObject:
-    - "#PathItemObject[get,put,post,delete,options,head,patch,trace]"
+functions:
+  - ensurePropertiesExample
+  - ensureAllArraysHaveItemTypes
+  - ensureSnakeCaseWithDigits
+  - validateOperationIdNaming
 rules:
-#  array-params-must-have-items-with-type:
-#    description: Array parameters must have an items attribute with a type
-#    given: $..*.parameters[*]
-#    message: '{{error}}'
-#    severity: error
-#    then:
-#      function: ensureAllArraysHaveItemTypes
-#  array-properties-must-have-items-with-type:
-#    description: Array properties must have an items attribute with a type
-#    given: $..*.properties[*]
-#    message: '{{error}}'
-#    severity: error
-#    then:
-#      function: ensureAllArraysHaveItemTypes
+  array-params-must-have-items-with-type:
+    description: Array parameters must have an items attribute with a type
+    given: $..*.parameters[*]
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureAllArraysHaveItemTypes
+  array-properties-must-have-items-with-type:
+    description: Array properties must have an items attribute with a type
+    given: $..*.properties[*]
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureAllArraysHaveItemTypes
   common-responses-not-found:
     description: Responses should contain common response - 404 (not found)
     given: $.paths[?(@property.match(/.*\/{.*}.*/))]..responses
@@ -52,7 +57,7 @@ rules:
       - field: '401'
         function: truthy
   contact-information:
-    description: Every API must have a contact containing name, email and a url
+    description: Every API must have a contact containing name and email
     given: $.info.contact
     message: '{{description}}; property {{property}} is missing'
     severity: error
@@ -60,8 +65,6 @@ rules:
       - field: name
         function: truthy
       - field: email
-        function: truthy
-      - field: url
         function: truthy
   endpoint-must-be-ref:
     description: Endpoint must be a $ref
@@ -82,39 +85,21 @@ rules:
       function: pattern
       functionOptions:
         match: ^resources/.*yml$
-#  example-key-must-be-snake-cased:
-#    description: example key must be snake cased (e.g. snake_case)
-#    given: $.components['examples'].*~
-#    message: '{{error}}'
-#    severity: error
-#    then:
-#      function: ensureSnakeCaseWithDigits
-#    type: style
-#  headers-must-include-examples:
-#    description: Headers must include examples
-#    given: $..headers.*
-#    message: '{{description}}; missing {{property}}'
-#    severity: error
-#    then:
-#      function: ensurePropertiesExample
-  http-verbs-should-be-used:
-    description: >-
-      HTTP verbs should be used to express different actions or functions on a
-      resource
-    given: $.paths[?(!@property.match(/well-known/ig))]
-    message: '{{description}}; The HTTP verb {{property}} is missing.'
+  example-key-must-be-snake-cased:
+    description: example key must be snake cased (e.g. snake_case)
+    given: $.components['examples'].*~
+    message: '{{error}}'
     severity: error
     then:
-      - field: get
-        function: truthy
-      - field: post
-        function: truthy
-      - field: put
-        function: truthy
-      - field: patch
-        function: truthy
-      - field: delete
-        function: truthy
+      function: ensureSnakeCaseWithDigits
+    type: style
+  headers-must-include-examples:
+    description: Headers must include examples
+    given: $..headers.*
+    message: '{{description}}; missing {{property}}'
+    severity: error
+    then:
+      function: ensurePropertiesExample
   info-description:
     description: Every API must have a global description
     given: $.info
@@ -204,32 +189,22 @@ rules:
       function: casing
       functionOptions:
         type: camel
-  operationid-must-be-snake-cased:
-    description: operationIds must be snake cased (e.g. snake_case)
-    given: $..operationId
-    message: '{{description}}; {{value}} incorrect'
+  operationid-must-follow-naming-conventions:
+    description: operationIds must follow naming conventions for method
+    type: style
+    given: $.paths[*]
+    message: '{{error}}'
     severity: error
     then:
-      function: casing
-      functionOptions:
-        type: snake
+      function: validateOperationIdNaming
+  parameter-key-must-be-snake-cased:
+    description: parameter key must be snake cased (e.g. snake_case)
+    given: $.components['parameters'].*~
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureSnakeCaseWithDigits
     type: style
-#  operationid-must-follow-naming-conventions:
-#    description: operationIds must follow naming conventions for method
-#    given: $.paths[*][*]
-#    message: '{{error}}'
-#    severity: error
-#    then:
-#      function: validateOperationIdNaming
-#    type: style
-#  parameter-key-must-be-snake-cased:
-#    description: parameter key must be snake cased (e.g. snake_case)
-#    given: $.components['parameters'].*~
-#    message: '{{error}}'
-#    severity: error
-#    then:
-#      function: ensureSnakeCaseWithDigits
-#    type: style
   params-must-include-examples:
     description: Parameters must include examples
     given: $..parameters.*
@@ -260,28 +235,6 @@ rules:
       - function: length
         functionOptions:
           min: 1
-  path-must-include-version:
-    description: Path must include the version
-    given: $.paths[*]~
-    message: '{{description}}; {{property}} incorrect'
-    resolved: false
-    severity: error
-    then:
-      function: pattern
-      functionOptions:
-        match: ^/v2/.*$
-  path-must-match-api-standards:
-    description: API Path must match company API uri standards
-    given: $.paths[?(!@property.match(/well-known/ig))~]
-    message: >-
-      {{description}}; {{property}} incorrect. Example:
-      /digital-twin/api/v1/products
-    resolved: false
-    severity: error
-    then:
-      function: pattern
-      functionOptions:
-        match: ^\/([a-z-]+)\/api\/(v[1-9])\/([a-z]+(\w+s\b.*))
   path-must-specify-tags:
     description: Every route must specify at least one tag it belongs to
     given: $.paths[?(!@property.match(/well-known/ig))].*
@@ -294,13 +247,13 @@ rules:
         function: length
         functionOptions:
           min: 1
-#  properties-must-include-examples:
-#    description: Object properties must include examples
-#    given: $..properties..properties.*
-#    message: '{{error}}'
-#    severity: error
-#    then:
-#      function: ensurePropertiesExample
+  properties-must-include-examples:
+    description: Object properties must include examples
+    given: $..properties..properties.*
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensurePropertiesExample
   ratelimit-headers:
     description: Response must include ratelimit-x headers
     given: $..responses.*
@@ -313,31 +266,33 @@ rules:
         function: truthy
       - field: headers.ratelimit-reset
         function: truthy
-#  response-key-must-be-snake-cased:
-#    description: response key must be snake cased (e.g. snake_case)
-#    given: $.components['responses'].*~
-#    message: '{{error}}'
-#    severity: error
-#    then:
-#      function: ensureSnakeCaseWithDigits
-#    type: style
-#  schema-key-must-be-snake-cased:
-#    description: schema key must be snake cased (e.g. snake_case)
-#    given: $.components['schemas'].*~
-#    message: '{{error}}'
-#    severity: error
-#    then:
-#      function: ensureSnakeCaseWithDigits
-#    type: style
+  response-key-must-be-snake-cased:
+    description: response key must be snake cased (e.g. snake_case)
+    given: $.components['responses'].*~
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureSnakeCaseWithDigits
+    type: style
+  schema-key-must-be-pascal-cased:
+    description: schema key must be pascal cased (e.g. PascalCase)
+    given: $.components['schemas'].*~
+    message: '{{error}}'
+    severity: error
+    then:
+      function: casing
+      functionOptions:
+        type: pascal
+    type: style
   servers-must-match-api-standards:
     description: Schema and host in URL must match company API standards
     given: $.servers..url
     message: >-
       {{description}}; {{property}}:{{value}} incorrect. Example:
-      https://api.bettercloud.com/automation/v1/actions
+      https://api.bettercloud.com/automation/v1
     resolved: false
     severity: error
     then:
       function: pattern
       functionOptions:
-        match: ^((http[s]?):\/\/)([a-z]+)([.+])bettercloud.com
+        match: ^((https):\/\/)([a-z-]+)([.]+)([a-z]?)bettercloud.com\/[a-z-]+\/v[1-9]+$

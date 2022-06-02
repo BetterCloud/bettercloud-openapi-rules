@@ -19,12 +19,15 @@
  *
  */
 
-module.exports = (item, _, paths) => {
+const _ = require('lodash');
+
+module.exports = (item, context, paths) => {
+  const target = _.get(paths, 'target', []);
   if (
-    paths.target.join(".").includes("properties.properties") ||
+    target.join(".").includes("properties.properties") ||
     // skip if this is an example
-    paths.target.includes("example") ||
-    paths.target.includes("examples") ||
+    target.includes("example") ||
+    target.includes("examples") ||
     // objects are not basic values
     item.type === "object" ||
     // binary values are not basic values
@@ -48,7 +51,7 @@ module.exports = (item, _, paths) => {
     return [
       {
         message: `${
-          paths.target ? paths.target.join(".") : "property"
+          target ? target.join(".") : "property"
         } does not include example`,
       },
     ];
