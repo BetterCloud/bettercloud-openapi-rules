@@ -29,7 +29,7 @@ paths:
             format: int32
           example: 25
       responses:
-        '200':
+        "200":
           description: A paged array of pets
           headers:
             x-next:
@@ -53,7 +53,7 @@ paths:
       tags:
         - pets
       responses:
-        '201':
+        "201":
           description: Null response
         default:
           description: unexpected error
@@ -87,7 +87,7 @@ paths:
             type: string
             example: en
       responses:
-        '200':
+        "200":
           description: Expected response to a valid request
           content:
             application/json:

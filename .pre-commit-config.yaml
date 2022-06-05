@@ -10,13 +10,13 @@ repos:
         entry: npm run prettier
         language: system
         pass_filenames: false
-      - id: sort-rules-main
-        name: Config Sort Spectral Ruleset
-        entry: npm run sort-rules
-        language: system
-        pass_filenames: false
-      - id: document-ruleset
-        name: Document Spectral Ruleset
-        entry: npm run document-ruleset
-        language: system
-        pass_filenames: false
+#      - id: sort-rules-main
+#        name: Config Sort Spectral Ruleset
+#        entry: npm run sort-rules
+#        language: system
+#        pass_filenames: false
+#      - id: document-ruleset
+#        name: Document Spectral Ruleset
+#        entry: npm run document-ruleset
+#        language: system
+#        pass_filenames: false
