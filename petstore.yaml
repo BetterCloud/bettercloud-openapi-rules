@@ -77,6 +77,15 @@ paths:
           schema:
             type: string
             example: "1234"
+        - name: Accept-Language
+          in: header
+          description: "Ut consequat ipsum sit amet ullamcorper congue. Vivamus consequat molestie erat, quis pulvinar eros. Donec non tellus quis neque pretium scelerisque. "
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: en
       responses:
         '200':
           description: Expected response to a valid request
@@ -84,6 +93,20 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Pet"
+              example:
+                content:
+                  - id: aaa7d21e-02eb-4bb4-89dd-f855078bd99e
+                    name: Set User's Manager
+                    description: This action sets a user's manager in Salesforce.
+                    parameters:
+                      - id: 87fba1fa-226a-4f51-b82b-ab08216b1d01
+                        required: true
+                        name: userId
+                        type: ID
+                      - id: 908060ce-e3c7-4308-a059-8da6cde39fa1
+                        required: true
+                        name: managerId
+                        type: ID
         default:
           description: unexpected error
           content:
@@ -97,12 +120,21 @@ components:
       required:
         - id
         - name
+        - breed
       properties:
         id:
           type: integer
           format: int64
         name:
           type: string
+        breed:
+          type: string
+          enum:
+            - POODLE
+            - BERNESE_MOUNTAIN_DOG
+            - CHIHUAHUA
+            - WEST_HIGHLAND_TERRIER
+            - IRISH_WOLF_HOUND
         tag:
           type: string
     Pets:
