@@ -69,6 +69,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+              example:
+                content:
+                  - id: aaa7d21e-02eb-4bb4-89dd-f855078bd99e
+                    name: Test
+                    description: Testing lint rule for response parameters.
+                    parameters:
+                      - id: 87fba1fa-226a-4f51-b82b-ab08216b1d01
+                        required: true
+                        name: value
+                        type: value
   /pets/{petId}:
     description: "Operations for a specific pet identified by petId"
     get:
@@ -109,11 +119,11 @@ paths:
                     parameters:
                       - id: 87fba1fa-226a-4f51-b82b-ab08216b1d01
                         required: true
-                        name: id
+                        name: testId
                         type: ID
                       - id: 908060ce-e3c7-4308-a059-8da6cde39fa1
                         required: true
-                        name: id
+                        name: anotherTestId
                         type: ID
         default:
           description: unexpected error
@@ -126,11 +136,11 @@ components:
     Pet:
       type: object
       required:
-        - id
+        - breedId
         - name
         - breed
       properties:
-        id:
+        breedId:
           type: integer
           format: int64
         name:
