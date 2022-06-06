@@ -20,6 +20,14 @@ paths:
       tags:
         - pets
       parameters:
+        - name: testId
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+          example: 25
         - name: limit
           in: query
           description: How many items to return at one time (max 100)
@@ -101,11 +109,11 @@ paths:
                     parameters:
                       - id: 87fba1fa-226a-4f51-b82b-ab08216b1d01
                         required: true
-                        name: userId
+                        name: id
                         type: ID
                       - id: 908060ce-e3c7-4308-a059-8da6cde39fa1
                         required: true
-                        name: managerId
+                        name: id
                         type: ID
         default:
           description: unexpected error

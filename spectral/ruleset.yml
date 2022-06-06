@@ -20,7 +20,7 @@ rules:
         match: ^[A-Z]+(?:_[A-Z]+)*$
   naming-convention-for-path-parameters:
     description: Path parameters must be camelCase
-    given: $.paths..parameters[?(@.in == 'path')].name      # We do not want to enforce camelCase for content headers
+    given: $.paths..parameters[?(@.in in ['path', 'query'])].name
     message: '{{description}}'
     severity: error
     then:
@@ -45,6 +45,25 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?$
+  standard-ids-for-path-parameters:
+    description: Meaningful parameter ids must be used in the form of <entity>Id. ie customerId, betterCloudUserId
+    given: $.paths..parameters[?(@.in in ['path', 'query'] && @.name in ['id'])].name
+    message: '{{description}}'
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
+  standard-ids-for-response-parameters:
+    description: Meaningful parameter ids must be used in the form of <entity>Id. ie customerId, betterCloudUserId
+    given: $.paths..responses..content[*].parameters[?(@.name in ['id'])].name # TODO FIGURE OUT WHY THIS NO WORK
+    message: '{{description}}'
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
+
 
 #  array-params-must-have-items-with-type:
 #    description: Array parameters must have an items attribute with a type

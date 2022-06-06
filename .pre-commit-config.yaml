@@ -5,11 +5,11 @@ repos:
       - id: no-commit-to-branch
   - repo: local
     hooks:
-      - id: prettier-main
-        name: Config Prettier
-        entry: npm run prettier
-        language: system
-        pass_filenames: false
+#      - id: prettier-main
+#        name: Config Prettier
+#        entry: npm run prettier
+#        language: system
+#        pass_filenames: false
 #      - id: sort-rules-main
 #        name: Config Sort Spectral Ruleset
 #        entry: npm run sort-rules
