@@ -10,7 +10,9 @@ functions:
   - validateOperationIdNaming
 rules:
   naming-convention-for-enums:
-    description: Enums must be all uppercase with underscores and must not end in an underscore
+    description: >-
+      Enums must be all uppercase with underscores and must not end in an
+      underscore
     given: $.components.schemas..properties..enum[*]
     message: '{{description}}'
     severity: error
@@ -46,7 +48,9 @@ rules:
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?$
   standard-ids-for-path-parameters:
-    description: Meaningful parameter ids must be used in the form of <entity>Id. ie customerId, betterCloudUserId
+    description: >-
+      Meaningful parameter ids must be used in the form of <entity>Id. ie
+      customerId, betterCloudUserId
     given: $.paths..parameters[?(@.in in ['path', 'query'] && @.name in ['id'])].name
     message: '{{description}}'
     severity: error
@@ -55,16 +59,16 @@ rules:
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
   standard-ids-for-response-parameters:
-    description: Meaningful parameter ids must be used in the form of <entity>Id. ie customerId, betterCloudUserId
-    given: $.paths..responses..content[*].parameters[?(@.name in ['id'])].name # TODO FIGURE OUT WHY THIS NO WORK
+    description: >-
+      Meaningful parameter ids must be used in the form of <entity>Id. ie
+      customerId, betterCloudUserId
+    given: $.paths..responses..content[*].parameters[?(@.name in ['id'])].name
     message: '{{description}}'
     severity: error
     then:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
-
-
 #  array-params-must-have-items-with-type:
 #    description: Array parameters must have an items attribute with a type
 #    given: $..*.parameters[*]

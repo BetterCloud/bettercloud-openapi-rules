@@ -8,3 +8,7 @@ Path parameters must be camelCase</details>
 Response parameters must be camelCase</details>
 <details><summary>naming-convention-for-schema-parameters (error)</summary>
 Schema parameters must be camelCase</details>
+<details><summary>standard-ids-for-path-parameters (error)</summary>
+Meaningful parameter ids must be used in the form of <entity>Id. ie customerId, betterCloudUserId</details>
+<details><summary>standard-ids-for-response-parameters (error)</summary>
+Meaningful parameter ids must be used in the form of <entity>Id. ie customerId, betterCloudUserId</details>
