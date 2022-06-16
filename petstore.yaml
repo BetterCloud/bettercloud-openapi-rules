@@ -20,6 +20,14 @@ paths:
       tags:
         - pets
       parameters:
+        - name: testId
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+          example: 25
         - name: limit
           in: query
           description: How many items to return at one time (max 100)
@@ -29,7 +37,7 @@ paths:
             format: int32
           example: 25
       responses:
-        '200':
+        "200":
           description: A paged array of pets
           headers:
             x-next:
@@ -53,7 +61,7 @@ paths:
       tags:
         - pets
       responses:
-        '201':
+        "201":
           description: Null response
         default:
           description: unexpected error
@@ -61,6 +69,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+              example:
+                content:
+                  - id: aaa7d21e-02eb-4bb4-89dd-f855078bd99e
+                    name: Test
+                    description: Testing lint rule for response parameters.
+                    parameters:
+                      - id: 87fba1fa-226a-4f51-b82b-ab08216b1d01
+                        required: true
+                        name: value
+                        type: value
   /pets/{petId}:
     description: "Operations for a specific pet identified by petId"
     get:
@@ -77,13 +95,36 @@ paths:
           schema:
             type: string
             example: "1234"
+        - name: Accept-Language
+          in: header
+          description: "Ut consequat ipsum sit amet ullamcorper congue. Vivamus consequat molestie erat, quis pulvinar eros. Donec non tellus quis neque pretium scelerisque. "
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            example: en
       responses:
-        '200':
+        "200":
           description: Expected response to a valid request
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Pet"
+              example:
+                content:
+                  - id: aaa7d21e-02eb-4bb4-89dd-f855078bd99e
+                    name: Set User's Manager
+                    description: This action sets a user's manager in Salesforce.
+                    parameters:
+                      - id: 87fba1fa-226a-4f51-b82b-ab08216b1d01
+                        required: true
+                        name: testId
+                        type: ID
+                      - id: 908060ce-e3c7-4308-a059-8da6cde39fa1
+                        required: true
+                        name: anotherTestId
+                        type: ID
         default:
           description: unexpected error
           content:
@@ -95,14 +136,23 @@ components:
     Pet:
       type: object
       required:
-        - id
+        - breedId
         - name
+        - breed
       properties:
-        id:
+        breedId:
           type: integer
           format: int64
         name:
           type: string
+        breed:
+          type: string
+          enum:
+            - POODLE
+            - BERNESE_MOUNTAIN_DOG
+            - CHIHUAHUA
+            - WEST_HIGHLAND_TERRIER
+            - IRISH_WOLF_HOUND
         tag:
           type: string
     Pets:

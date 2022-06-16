@@ -32,6 +32,14 @@ Every response must specify its content type</details>
 Every API must have at least one path</details>
 <details><summary>must-have-response-body (error)</summary>
 Every route returning a http status code of 200 or 201 must have a response body defined</details>
+<details><summary>naming-convention-for-enums (error)</summary>
+Enums must be all uppercase with underscores and must not end in an underscore</details>
+<details><summary>naming-convention-for-path-parameters (error)</summary>
+Path parameters must be camelCase</details>
+<details><summary>naming-convention-for-response-parameters (error)</summary>
+Response parameters must be camelCase</details>
+<details><summary>naming-convention-for-schema-parameters (error)</summary>
+Schema parameters must be camelCase</details>
 <details><summary>no-http-verbs-in-resources (error)</summary>
 The HTTP Verbs should not be used in the route path to define different actions on a resource</details>
 <details><summary>open-api-version (error)</summary>
@@ -60,3 +68,9 @@ response key must be snake cased (e.g. snake_case)</details>
 schema key must be pascal cased (e.g. PascalCase)</details>
 <details><summary>servers-must-match-api-standards (error)</summary>
 Schema and host in URL must match company API standards</details>
+<details><summary>standard-ids-for-path-parameters (error)</summary>
+Meaningful path parameter ids must be used in the form of {entity}Id. ie customerId, betterCloudUserId</details>
+<details><summary>standard-ids-for-response-parameters (error)</summary>
+Meaningful response parameter ids must be used in the form of {entity}Id. ie customerId, betterCloudUserId</details>
+<details><summary>standard-ids-for-schema-parameters (error)</summary>
+Meaningful schema ids must be used in the form of {entity}Id. ie customerId, betterCloudUserId</details>
