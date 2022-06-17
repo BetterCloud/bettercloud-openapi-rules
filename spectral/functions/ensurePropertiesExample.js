@@ -19,10 +19,8 @@
  *
  */
 
-const _ = require("lodash");
-
 module.exports = (item, context, paths) => {
-  const target = _.get(paths, "target", []);
+  const target = paths?.target ?? [];
   if (
     target.join(".").includes("properties.properties") ||
     // skip if this is an example

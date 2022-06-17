@@ -22,7 +22,6 @@
     "@stoplight/spectral-cli": "^6.4.0",
     "@stoplight/spectral-core": "^1.12.2",
     "js-yaml": "^4.1.0",
-    "lodash": "^4.17.21",
     "prettier": "^2.6.2",
     "yaml-sort": "^1.2.1"
   },
@@ -33,5 +32,13 @@
     "prettier",
     "sort-rules",
     "document-ruleset"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/brock_reiman/bettercloud-openapi-rules.git"
+  },
+  "bugs": {
+    "url": "https://bitbucket.org/brock_reiman/bettercloud-openapi-rules/issues"
+  },
+  "homepage": "https://bitbucket.org/brock_reiman/bettercloud-openapi-rules#readme"
 }

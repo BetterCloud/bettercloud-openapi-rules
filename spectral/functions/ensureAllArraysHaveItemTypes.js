@@ -21,11 +21,9 @@
  * https://github.com/box/box-openapi/blob/184889a4b5b6156e0e2719bd513d93f994c6c50e/src/spectral/ensureAllArraysHaveItemTypes.js
  */
 
-const _ = require("lodash");
-
 module.exports = (param, context, paths) => {
   // if this is actually a property called properties, ignore
-  if (_.get(paths, "target", []).join(".").includes("properties.properties")) {
+  if ((paths?.target ?? []).join(".").includes("properties.properties")) {
     return;
   }
 
