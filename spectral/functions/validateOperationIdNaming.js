@@ -102,13 +102,15 @@ const validateOperation = (method, path, operationId) => {
 };
 
 module.exports = (endpoint, options, { path }) => {
-  const endpointOperations = Object.entries(endpoint).map((endpointObject, method) => {
-    if (METHODS.includes(method.toString().toLowerCase())) {
-      return validateOperation(method, "path", endpointObject.operationId);
-    } else {
-      return null;
-    }
-  }).flat();
+  const endpointOperations = Object.entries(endpoint)
+    .map((endpointObject, method) => {
+      if (METHODS.includes(method.toString().toLowerCase())) {
+        return validateOperation(method, "path", endpointObject.operationId);
+      } else {
+        return null;
+      }
+    })
+    .flat();
 
-  return endpointOperations.filter(operation => operation != null);
+  return endpointOperations.filter((operation) => operation != null);
 };
