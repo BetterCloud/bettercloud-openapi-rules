@@ -23,6 +23,14 @@ rules:
     severity: error
     then:
       function: ensureAllArraysHaveItemTypes
+  body-properties-case:
+    description: Body properties MUST be camelCase
+    given: $..properties.*~
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z]+[a-zA-Z0-9]*$
   common-responses-not-found:
     description: Responses should contain common response - 404 (not found)
     given: $.paths[?(@property.match(/.*\/{.*}.*/))]..responses
@@ -295,6 +303,16 @@ rules:
         function: length
         functionOptions:
           min: 1
+  paths-kebab-case:
+    description: All YAML/JSON paths MUST follow kebab-case
+    given: $.paths[*]~
+    message: '{{property}} is not kebab-case: {{error}}'
+    recommended: true
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: ^/([a-z0-9]+(-[a-z0-9]+)*)?(/[a-z0-9]+(-[a-z0-9]+)*|/{.+})*$
   properties-must-include-examples:
     description: Object properties must include examples
     given: $..properties..properties.*
@@ -322,6 +340,13 @@ rules:
     then:
       function: ensureSnakeCaseWithDigits
     type: style
+  response-media-type-json:
+    description: application/json is the only acceptable content type
+    given: $.paths.*.*.responses.*.content
+    severity: error
+    then:
+      field: application/json
+      function: truthy
   schema-key-must-be-pascal-cased:
     description: schema key must be pascal cased (e.g. PascalCase)
     given: $.components['schemas'].*~
@@ -378,36 +403,13 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
-  paths-kebab-case:
-    description: All YAML/JSON paths MUST follow kebab-case
-    severity: warn
-    recommended: true
-    message: "{{property}} is not kebab-case: {{error}}"
-    given: $.paths[*]~
-    then:
-      function: pattern
-      functionOptions:
-        match: "^\/([a-z0-9]+(-[a-z0-9]+)*)?(\/[a-z0-9]+(-[a-z0-9]+)*|\/{.+})*$" # doesn't allow /asasd{asdas}sadas pattern or not closed braces
-  body-properties-case:
-    description: Body properties MUST be camelCase
-    severity: error
-    given: $..properties.*~
-    then:
-      function: pattern
-      functionOptions:
-        match: '^[a-z]+[a-zA-Z0-9]*$'
-  response-media-type-json:
-    given: "$.paths.*.*.responses.*.content"
-    description: application/json is the only acceptable content type
-    severity: error
-    then:
-      function: truthy
-      field: application/json
   title-starts-with-bettercloud:
+    description: >-
+      OAS Title must begin with "BetterCloud's" (i.e. BetterCloud's Automation
+      API)
     given: $.info.title
-    description: OAS Title must begin with "BetterCloud's" (i.e. BetterCloud's Automation API)
     severity: error
     then:
       function: pattern
       functionOptions:
-        match: "^BetterCloud's"
+        match: ^BetterCloud's

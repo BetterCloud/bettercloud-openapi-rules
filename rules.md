@@ -4,6 +4,8 @@
 Array parameters must have an items attribute with a type</details>
 <details><summary>array-properties-must-have-items-with-type (error)</summary>
 Array properties must have an items attribute with a type</details>
+<details><summary>body-properties-case (error)</summary>
+Body properties MUST be camelCase</details>
 <details><summary>common-responses-not-found (error)</summary>
 Responses should contain common response - 404 (not found)</details>
 <details><summary>common-responses-server-error (error)</summary>
@@ -58,12 +60,16 @@ Every route of an API should have a description</details>
 DTOs should be used to specify the schema(data types) of a request / response</details>
 <details><summary>path-must-specify-tags (error)</summary>
 Every route must specify at least one tag it belongs to</details>
+<details><summary>paths-kebab-case (warn)</summary>
+All YAML/JSON paths MUST follow kebab-case</details>
 <details><summary>properties-must-include-examples (error)</summary>
 Object properties must include examples</details>
 <details><summary>ratelimit-headers (error)</summary>
 Response must include ratelimit-x headers</details>
 <details><summary>response-key-must-be-snake-cased (error)</summary>
 response key must be snake cased (e.g. snake_case)</details>
+<details><summary>response-media-type-json (error)</summary>
+application/json is the only acceptable content type</details>
 <details><summary>schema-key-must-be-pascal-cased (error)</summary>
 schema key must be pascal cased (e.g. PascalCase)</details>
 <details><summary>servers-must-match-api-standards (error)</summary>
@@ -74,3 +80,5 @@ Meaningful path parameter ids must be used in the form of {entity}Id. ie custome
 Meaningful response parameter ids must be used in the form of {entity}Id. ie customerId, betterCloudUserId</details>
 <details><summary>standard-ids-for-schema-parameters (error)</summary>
 Meaningful schema ids must be used in the form of {entity}Id. ie customerId, betterCloudUserId</details>
+<details><summary>title-starts-with-bettercloud (error)</summary>
+OAS Title must begin with "BetterCloud's" (i.e. BetterCloud's Automation API)</details>
