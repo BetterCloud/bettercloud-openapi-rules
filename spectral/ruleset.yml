@@ -378,3 +378,36 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
+  paths-kebab-case:
+    description: All YAML/JSON paths MUST follow kebab-case
+    severity: warn
+    recommended: true
+    message: "{{property}} is not kebab-case: {{error}}"
+    given: $.paths[*]~
+    then:
+      function: pattern
+      functionOptions:
+        match: "^\/([a-z0-9]+(-[a-z0-9]+)*)?(\/[a-z0-9]+(-[a-z0-9]+)*|\/{.+})*$" # doesn't allow /asasd{asdas}sadas pattern or not closed braces
+  body-properties-case:
+    description: Body properties MUST be camelCase
+    severity: error
+    given: $..properties.*~
+    then:
+      function: pattern
+      functionOptions:
+        match: '^[a-z]+[a-zA-Z0-9]*$'
+  response-media-type-json:
+    given: "$.paths.*.*.responses.*.content"
+    description: application/json is the only acceptable content type
+    severity: error
+    then:
+      function: truthy
+      field: application/json
+  title-starts-with-bettercloud:
+    given: $.info.title
+    description: OAS Title must begin with "BetterCloud's" (i.e. BetterCloud's Automation API)
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^BetterCloud's"
