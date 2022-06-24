@@ -23,7 +23,7 @@ rules:
     severity: error
     then:
       function: ensureAllArraysHaveItemTypes
-  body-properties-case:
+  body-properties-must-be-camel-case:
     description: Body properties MUST be camelCase
     given: $..properties.*~
     severity: error
@@ -31,58 +31,18 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+[a-zA-Z0-9]*$
-  common-responses-not-found:
-    description: Responses should contain common response - 404 (not found)
-    given: $.paths[?(@property.match(/.*\/{.*}.*/))]..responses
-    message: '{{description}}. Missing {{property}}'
+  dtos-must-define-example-schema:
+    description: Every DTO must define at least one example
+    given: $.paths[?(!@property.match(/well-known/ig))]..content.*
+    message: '{{description}}; DTO is lacking an example {{path}}'
     severity: error
     then:
-      - field: '404'
-        function: truthy
-  common-responses-server-error:
-    description: Responses should contain common response - 500 (server error)
-    given: $.paths..responses
-    message: '{{description}}. Missing {{property}}'
-    severity: error
-    then:
-      - field: '500'
-        function: truthy
-  common-responses-too-many-requests:
-    description: Responses should contain common response - 429 (too many requests)
-    given: $.paths..responses
-    message: '{{description}}. Missing {{property}}'
-    severity: error
-    then:
-      - field: '429'
-        function: truthy
-  common-responses-unauthorized:
-    description: Responses should contain common response - 401 (unauthorized)
-    given: $.paths..responses
-    message: '{{description}}. Missing {{property}}'
-    severity: error
-    then:
-      - field: '401'
-        function: truthy
-  contact-information:
-    description: Every API must have a contact containing name and email
-    given: $.info.contact
-    message: '{{description}}; property {{property}} is missing'
-    severity: error
-    then:
-      - field: name
-        function: truthy
-      - field: email
-        function: truthy
-  endpoint-must-be-ref:
-    description: Endpoint must be a $ref
-    given: $.paths.*.*
-    message: '{{description}}; {{property}} incorrect'
-    resolved: false
-    severity: error
-    then:
-      - field: $ref
-        function: truthy
-  endpoint-ref-must-be-file:
+      - function: xor
+        functionOptions:
+          properties:
+            - example
+            - examples
+  endpoint-refs-must-be-file:
     description: Endpoint must a $ref to a file in resources/
     given: $.paths.*.$ref
     message: '{{description}}; {{value}} incorrect'
@@ -92,7 +52,27 @@ rules:
       function: pattern
       functionOptions:
         match: ^resources/.*yml$
-  example-key-must-be-snake-cased:
+  endpoints-must-be-ref:
+    description: Endpoint must be a $ref
+    given: $.paths.*.*
+    message: '{{description}}; {{property}} incorrect'
+    resolved: false
+    severity: error
+    then:
+      - field: $ref
+        function: truthy
+  enums-must-be-upper-snake-case:
+    description: >-
+      Enums must be all uppercase with underscores and must not end in an
+      underscore
+    given: $.components.schemas..properties..enum[*]
+    message: '{{description}}'
+    severity: error
+    then:
+      function: casing
+      functionOptions:
+        type: macro
+  example-keys-must-be-snake-cased:
     description: example key must be snake cased (e.g. snake_case)
     given: $.components['examples'].*~
     message: '{{error}}'
@@ -107,7 +87,17 @@ rules:
     severity: error
     then:
       function: ensurePropertiesExample
-  info-description:
+  oas-files-must-have-contact-info:
+    description: Every API must have a contact containing name and email
+    given: $.info.contact
+    message: '{{description}}; property {{property}} is missing'
+    severity: error
+    then:
+      - field: name
+        function: truthy
+      - field: email
+        function: truthy
+  oas-files-must-have-global-description:
     description: Every API must have a global description
     given: $.info
     message: >-
@@ -121,32 +111,7 @@ rules:
         function: length
         functionOptions:
           min: 100
-  must-define-example-schema:
-    description: Every DTO must define at least one example
-    given: $.paths[?(!@property.match(/well-known/ig))]..content.*
-    message: '{{description}}; DTO is lacking an example {{path}}'
-    severity: error
-    then:
-      - function: xor
-        functionOptions:
-          properties:
-            - example
-            - examples
-  must-have-content-type:
-    description: Every response must specify its content type
-    given: $.paths[?(!@property.match(/well-known/ig))]..content
-    message: >-
-      {{description}}; property {{property}} is missing or not a valid
-      content-type
-    severity: error
-    then:
-      - field: '@key'
-        function: truthy
-      - field: '@key'
-        function: pattern
-        functionOptions:
-          match: /
-  must-have-path:
+  oas-files-must-have-path:
     description: Every API must have at least one path
     given: $
     message: '{{description}}; property `paths` is empty'
@@ -156,71 +121,17 @@ rules:
         function: length
         functionOptions:
           min: 1
-  must-have-response-body:
+  oas-files-must-have-title-starting-with-bettercloud:
     description: >-
-      Every route returning a http status code of 200 or 201 must have a
-      response body defined
-    given: >-
-      $.paths[?(!@property.match(/well-known/ig))]..responses[200,201,"200","201"]
-    message: '{{description}}; property {{property}} is missing at path: {{path}}'
-    severity: error
-    then:
-      - field: content
-        function: truthy
-      - field: description
-        function: truthy
-  naming-convention-for-enums:
-    description: >-
-      Enums must be all uppercase with underscores and must not end in an
-      underscore
-    given: $.components.schemas..properties..enum[*]
-    message: '{{description}}'
-    severity: error
-    then:
-      function: casing
-      functionOptions:
-        type: macro
-  naming-convention-for-path-parameters:
-    description: Path parameters must be camelCase
-    given: $.paths..parameters[?(@.in in ['path', 'query'])].name
-    message: '{{description}}'
-    severity: error
-    then:
-      function: casing
-      functionOptions:
-        type: camel
-  naming-convention-for-response-parameters:
-    description: Response parameters must be camelCase
-    given: $.paths..responses..content[*].parameters[*].name
-    message: '{{description}}'
-    severity: error
-    then:
-      function: casing
-      functionOptions:
-        type: camel
-  naming-convention-for-schema-parameters:
-    description: Schema parameters must be camelCase
-    given: $.components.schemas..required[*]
-    message: '{{description}}'
-    severity: error
-    then:
-      function: casing
-      functionOptions:
-        type: camel
-  no-http-verbs-in-resources:
-    description: >-
-      The HTTP Verbs should not be used in the route path to define different
-      actions on a resource
-    given: $.paths[?(!@property.match(/well-known/ig))]~
-    message: >-
-      {{description}}; {{property}} Instead use HTTP verbs to define actions on
-      a resource. Example: PUT - /digital-twin/api/v1/products/42
+      OAS Title must begin with "BetterCloud's" (i.e. BetterCloud's Automation
+      API)
+    given: $.info.title
     severity: error
     then:
       function: pattern
       functionOptions:
-        notMatch: \/(get|post|put|patch|delete)(\/|$)
-  open-api-version:
+        match: ^BetterCloud's
+  oas-files-must-use-version-3.0.x:
     description: >-
       OAS files must adhere to an openapi version of 3.0.x. All other versions
       are not authorized
@@ -231,7 +142,7 @@ rules:
       function: pattern
       functionOptions:
         match: ^(3\.)(0\.)(\d+)$
-  operation-id-camel-case:
+  operation-ids-must-be-camel-case:
     description: >-
       Operation IDs must be camelCase since some generators (e.g. RTK Query)
       don't support kebab-cases.
@@ -245,7 +156,7 @@ rules:
       function: casing
       functionOptions:
         type: camel
-  operationid-must-follow-naming-conventions:
+  operationids-must-follow-naming-conventions:
     description: operationIds must follow naming conventions for method
     given: $.paths[*]
     message: '{{error}}'
@@ -253,7 +164,7 @@ rules:
     then:
       function: validateOperationIdNaming
     type: style
-  parameter-key-must-be-snake-cased:
+  parameter-keys-must-be-snake-cased:
     description: parameter key must be snake cased (e.g. snake_case)
     given: $.components['parameters'].*~
     message: '{{error}}'
@@ -272,7 +183,37 @@ rules:
         properties:
           - example
           - examples
-  path-description-is-mandatory:
+  path-parameters-must-be-camel-case:
+    description: Path parameters must be camelCase
+    given: $.paths..parameters[?(@.in in ['path', 'query'])].name
+    message: '{{description}}'
+    severity: error
+    then:
+      function: casing
+      functionOptions:
+        type: camel
+  path-parameters-must-have-meaningful-id-names:
+    description: >-
+      Meaningful path parameter ids must be used in the form of {entity}Id. ie
+      customerId, betterCloudUserId
+    given: $.paths..parameters[?(@.in in ['path', 'query'] && @.name in ['id'])].name
+    message: '{{description}}'
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
+  paths-must-be-kebab-case:
+    description: All YAML/JSON paths MUST follow kebab-case
+    given: $.paths[*]~
+    message: '{{property}} is not kebab-case: {{error}}'
+    recommended: true
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: ^/([a-z0-9]+(-[a-z0-9]+)*)?(/[a-z0-9]+(-[a-z0-9]+)*|/{.+})*$
+  paths-must-have-descriptions:
     description: Every route of an API should have a description
     given: $.paths[?(!@property.match(/well-known/ig))]
     message: '{{description}}; property: {{property}} is missing'
@@ -280,18 +221,33 @@ rules:
     then:
       - field: description
         function: truthy
-  path-dto-reference:
+  paths-must-not-use-http-verbs-in-name:
     description: >-
-      DTOs should be used to specify the schema(data types) of a request /
-      response
-    given: $.components.schemas
-    message: '{{description}}; property {{property}} is missing'
+      The HTTP Verbs should not be used in the route path to define different
+      actions on a resource
+    given: $.paths[?(!@property.match(/well-known/ig))]~
+    message: >-
+      {{description}}; {{property}} Instead use HTTP verbs to define actions on
+      a resource. Example: PUT - /digital-twin/api/v1/products/42
     severity: error
     then:
-      - function: length
-        functionOptions:
-          min: 1
-  path-must-specify-tags:
+      function: pattern
+      functionOptions:
+        notMatch: \/(get|post|put|patch|delete)(\/|$)
+  paths-must-return-response-body-with-2xx:
+    description: >-
+      Every route returning a http status code of 200 or 201 must have a
+      response body defined
+    given: >-
+      $.paths[?(!@property.match(/well-known/ig))]..responses[200,201,"200","201"]
+    message: '{{description}}; property {{property}} is missing at path: {{path}}'
+    severity: error
+    then:
+      - field: content
+        function: truthy
+      - field: description
+        function: truthy
+  paths-must-specify-tags:
     description: Every route must specify at least one tag it belongs to
     given: $.paths[?(!@property.match(/well-known/ig))].*
     message: '{{description}}; property tags is missing at: {{path}}'
@@ -303,16 +259,6 @@ rules:
         function: length
         functionOptions:
           min: 1
-  paths-kebab-case:
-    description: All YAML/JSON paths MUST follow kebab-case
-    given: $.paths[*]~
-    message: '{{property}} is not kebab-case: {{error}}'
-    recommended: true
-    severity: warn
-    then:
-      function: pattern
-      functionOptions:
-        match: ^/([a-z0-9]+(-[a-z0-9]+)*)?(/[a-z0-9]+(-[a-z0-9]+)*|/{.+})*$
   properties-must-include-examples:
     description: Object properties must include examples
     given: $..properties..properties.*
@@ -320,7 +266,81 @@ rules:
     severity: error
     then:
       function: ensurePropertiesExample
-  ratelimit-headers:
+  response-keys-must-be-snake-cased:
+    description: response key must be snake cased (e.g. snake_case)
+    given: $.components['responses'].*~
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureSnakeCaseWithDigits
+    type: style
+  response-parameters-must-be-camel-case:
+    description: Response parameters must be camelCase
+    given: $.paths..responses..content[*].parameters[*].name
+    message: '{{description}}'
+    severity: error
+    then:
+      function: casing
+      functionOptions:
+        type: camel
+  response-parameters-must-have-meaningful-id-names:
+    description: >-
+      Meaningful response parameter ids must be used in the form of {entity}Id.
+      ie customerId, betterCloudUserId
+    given: $.paths..responses..content[*].parameters[?(@.type == 'ID')].name
+    message: '{{description}}'
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
+  responses-must-contain-common-response-401:
+    description: Responses should contain common response - 401 (unauthorized)
+    given: $.paths..responses
+    message: '{{description}}. Missing {{property}}'
+    severity: error
+    then:
+      - field: '401'
+        function: truthy
+  responses-must-contain-common-response-404:
+    description: Responses should contain common response - 404 (not found)
+    given: $.paths[?(@property.match(/.*\/{.*}.*/))]..responses
+    message: '{{description}}. Missing {{property}}'
+    severity: error
+    then:
+      - field: '404'
+        function: truthy
+  responses-must-contain-common-response-429:
+    description: Responses should contain common response - 429 (too many requests)
+    given: $.paths..responses
+    message: '{{description}}. Missing {{property}}'
+    severity: error
+    then:
+      - field: '429'
+        function: truthy
+  responses-must-contain-common-response-500:
+    description: Responses should contain common response - 500 (server error)
+    given: $.paths..responses
+    message: '{{description}}. Missing {{property}}'
+    severity: error
+    then:
+      - field: '500'
+        function: truthy
+  responses-must-have-content-type:
+    description: Every response must specify its content type
+    given: $.paths[?(!@property.match(/well-known/ig))]..content
+    message: >-
+      {{description}}; property {{property}} is missing or not a valid
+      content-type
+    severity: error
+    then:
+      - field: '@key'
+        function: truthy
+      - field: '@key'
+        function: pattern
+        functionOptions:
+          match: /
+  responses-must-include-ratelimit-headers:
     description: Response must include ratelimit-x headers
     given: $..responses.*
     message: '{{description}}; missing {{property}}'
@@ -332,22 +352,14 @@ rules:
         function: truthy
       - field: headers.ratelimit-reset
         function: truthy
-  response-key-must-be-snake-cased:
-    description: response key must be snake cased (e.g. snake_case)
-    given: $.components['responses'].*~
-    message: '{{error}}'
-    severity: error
-    then:
-      function: ensureSnakeCaseWithDigits
-    type: style
-  response-media-type-json:
+  responses-must-use-media-type-json-content-type:
     description: application/json is the only acceptable content type
     given: $.paths.*.*.responses.*.content
     severity: error
     then:
       field: application/json
       function: truthy
-  schema-key-must-be-pascal-cased:
+  schema-keys-must-be-pascal-cased:
     description: schema key must be pascal cased (e.g. PascalCase)
     given: $.components['schemas'].*~
     message: '{{error}}'
@@ -357,6 +369,37 @@ rules:
       functionOptions:
         type: pascal
     type: style
+  schema-parameters-must-be-camel-case:
+    description: Schema parameters must be camelCase
+    given: $.components.schemas..required[*]
+    message: '{{description}}'
+    severity: error
+    then:
+      function: casing
+      functionOptions:
+        type: camel
+  schema-parameters-must-have-meaningful-id-names:
+    description: >-
+      Meaningful schema ids must be used in the form of {entity}Id. ie
+      customerId, betterCloudUserId
+    given: $.components.schemas..required[?(@ == 'id')]
+    message: '{{description}}'
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
+  schemas-must-use-dtos:
+    description: >-
+      DTOs should be used to specify the schema(data types) of a request /
+      response
+    given: $.components.schemas
+    message: '{{description}}; property {{property}} is missing'
+    severity: error
+    then:
+      - function: length
+        functionOptions:
+          min: 1
   servers-must-match-api-standards:
     description: Schema and host in URL must match company API standards
     given: $.servers..url
@@ -370,46 +413,3 @@ rules:
       functionOptions:
         match: >-
           ^((https):\/\/)([a-z-]+)([.]+)([a-z]?)bettercloud.com\/[a-z-]+\/v[1-9]+$
-  standard-ids-for-path-parameters:
-    description: >-
-      Meaningful path parameter ids must be used in the form of {entity}Id. ie
-      customerId, betterCloudUserId
-    given: $.paths..parameters[?(@.in in ['path', 'query'] && @.name in ['id'])].name
-    message: '{{description}}'
-    severity: error
-    then:
-      function: pattern
-      functionOptions:
-        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
-  standard-ids-for-response-parameters:
-    description: >-
-      Meaningful response parameter ids must be used in the form of {entity}Id.
-      ie customerId, betterCloudUserId
-    given: $.paths..responses..content[*].parameters[?(@.type == 'ID')].name
-    message: '{{description}}'
-    severity: error
-    then:
-      function: pattern
-      functionOptions:
-        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
-  standard-ids-for-schema-parameters:
-    description: >-
-      Meaningful schema ids must be used in the form of {entity}Id. ie
-      customerId, betterCloudUserId
-    given: $.components.schemas..required[?(@ == 'id')]
-    message: '{{description}}'
-    severity: error
-    then:
-      function: pattern
-      functionOptions:
-        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
-  title-starts-with-bettercloud:
-    description: >-
-      OAS Title must begin with "BetterCloud's" (i.e. BetterCloud's Automation
-      API)
-    given: $.info.title
-    severity: error
-    then:
-      function: pattern
-      functionOptions:
-        match: ^BetterCloud's
