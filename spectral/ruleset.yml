@@ -72,8 +72,8 @@ rules:
       function: casing
       functionOptions:
         type: macro
-  example-keys-must-be-snake-cased:
-    description: example key must be snake cased (e.g. snake_case)
+  example-keys-must-be-snake-case:
+    description: example key must be snake case (e.g. snake_case)
     given: $.components['examples'].*~
     message: '{{error}}'
     severity: error
@@ -164,8 +164,8 @@ rules:
     then:
       function: validateOperationIdNaming
     type: style
-  parameter-keys-must-be-snake-cased:
-    description: parameter key must be snake cased (e.g. snake_case)
+  parameter-keys-must-be-snake-case:
+    description: parameter key must be snake case (e.g. snake_case)
     given: $.components['parameters'].*~
     message: '{{error}}'
     severity: error
@@ -266,8 +266,8 @@ rules:
     severity: error
     then:
       function: ensurePropertiesExample
-  response-keys-must-be-snake-cased:
-    description: response key must be snake cased (e.g. snake_case)
+  response-keys-must-be-snake-case:
+    description: response key must be snake case (e.g. snake_case)
     given: $.components['responses'].*~
     message: '{{error}}'
     severity: error
@@ -359,8 +359,8 @@ rules:
     then:
       field: application/json
       function: truthy
-  schema-keys-must-be-pascal-cased:
-    description: schema key must be pascal cased (e.g. PascalCase)
+  schema-keys-must-be-pascal-case:
+    description: schema key must be pascal case (e.g. PascalCase)
     given: $.components['schemas'].*~
     message: '{{error}}'
     severity: error
