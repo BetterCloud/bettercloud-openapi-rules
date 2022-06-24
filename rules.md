@@ -14,8 +14,8 @@ Endpoint must a $ref to a file in resources/</details>
 Endpoint must be a $ref</details>
 <details><summary>enums-must-be-upper-snake-case (error)</summary>
 Enums must be all uppercase with underscores and must not end in an underscore</details>
-<details><summary>example-keys-must-be-snake-cased (error)</summary>
-example key must be snake cased (e.g. snake_case)</details>
+<details><summary>example-keys-must-be-snake-case (error)</summary>
+example key must be snake case (e.g. snake_case)</details>
 <details><summary>headers-must-include-examples (error)</summary>
 Headers must include examples</details>
 <details><summary>oas-files-must-have-contact-info (error)</summary>
@@ -32,8 +32,8 @@ OAS files must adhere to an openapi version of 3.0.x. All other versions are not
 Operation IDs must be camelCase since some generators (e.g. RTK Query) don't support kebab-cases.</details>
 <details><summary>operationids-must-follow-naming-conventions (error)</summary>
 operationIds must follow naming conventions for method</details>
-<details><summary>parameter-keys-must-be-snake-cased (error)</summary>
-parameter key must be snake cased (e.g. snake_case)</details>
+<details><summary>parameter-keys-must-be-snake-case (error)</summary>
+parameter key must be snake case (e.g. snake_case)</details>
 <details><summary>params-must-include-examples (error)</summary>
 Parameters must include examples</details>
 <details><summary>path-parameters-must-be-camel-case (error)</summary>
@@ -52,8 +52,8 @@ Every route returning a http status code of 200 or 201 must have a response body
 Every route must specify at least one tag it belongs to</details>
 <details><summary>properties-must-include-examples (error)</summary>
 Object properties must include examples</details>
-<details><summary>response-keys-must-be-snake-cased (error)</summary>
-response key must be snake cased (e.g. snake_case)</details>
+<details><summary>response-keys-must-be-snake-case (error)</summary>
+response key must be snake case (e.g. snake_case)</details>
 <details><summary>response-parameters-must-be-camel-case (error)</summary>
 Response parameters must be camelCase</details>
 <details><summary>response-parameters-must-have-meaningful-id-names (error)</summary>
@@ -72,8 +72,8 @@ Every response must specify its content type</details>
 Response must include ratelimit-x headers</details>
 <details><summary>responses-must-use-media-type-json-content-type (error)</summary>
 application/json is the only acceptable content type</details>
-<details><summary>schema-keys-must-be-pascal-cased (error)</summary>
-schema key must be pascal cased (e.g. PascalCase)</details>
+<details><summary>schema-keys-must-be-pascal-case (error)</summary>
+schema key must be pascal case (e.g. PascalCase)</details>
 <details><summary>schema-parameters-must-be-camel-case (error)</summary>
 Schema parameters must be camelCase</details>
 <details><summary>schema-parameters-must-have-meaningful-id-names (error)</summary>
