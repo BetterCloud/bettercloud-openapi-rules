@@ -101,7 +101,7 @@ const validateOperation = (method, path, operationId) => {
   }
 };
 
-module.exports = (endpoint, options, { path }) => {
+const validateOperationIdNaming = (endpoint, options, { path }) => {
   const endpointOperations = Object.entries(endpoint)
     .map((endpointObject, method) => {
       if (METHODS.includes(method.toString().toLowerCase())) {
@@ -114,3 +114,5 @@ module.exports = (endpoint, options, { path }) => {
 
   return endpointOperations.filter((operation) => operation != null);
 };
+
+export default validateOperationIdNaming;

@@ -1,0 +1,20 @@
+functionsDir: ../spectral/functions
+functions:
+  - ensurePropertiesExample
+  - ensureAllArraysHaveItemTypes
+  - ensureSnakeCaseWithDigits
+  - validateOperationIdNaming
+rules:
+  servers-must-match-api-standards:
+    description: Schema and host in URL must match company API standards
+    given: $.servers..url
+    message: >-
+      {{description}}; {{property}}:{{value}} incorrect. Example:
+      https://api.bettercloud.com/automation/v1
+    resolved: false
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: >-
+          ^((https):\/\/)([a-z-]+)([.]+)([a-z]?)bettercloud.com\/[a-z-]+\/v[1-9]+$
