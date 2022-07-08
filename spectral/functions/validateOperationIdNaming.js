@@ -6,7 +6,7 @@
  */
 const METHODS = ["get", "post", "put", "patch", "delete"];
 const DELETE = ["delete", "destroy", "remove", "purge", "untag"];
-const GET = ["get", "list"];
+const GET = ["get", "list", "search"];
 const PATCH = ["patch"];
 const POST = [
   "create",
@@ -21,6 +21,7 @@ const POST = [
   "retry",
   "validate",
   "assign",
+  "search",
 ];
 const PUT = ["update"];
 

@@ -13,9 +13,10 @@ describe(ruleKeyUnderTest, () => {
     const res = await spectral.run({
       openapi: "3.0.0",
       info: { contact: { email: "here@invalid.com" } },
-      servers: { url: "https://petstore.bettercloud.com/capability/v1" },
+      servers: [{ url: "https://petstore.bettercloud.com/capability/v1" }],
     });
 
+    expect(res).toBeDefined();
     expect(res).toEqual([]);
   });
 
@@ -23,14 +24,15 @@ describe(ruleKeyUnderTest, () => {
     const res = await spectral.run({
       openapi: "3.0.0",
       info: { contact: { email: "here@invalid.com" } },
-      servers: { url: "https://app.bettercloud.com/" },
+      servers: [{ url: "https://app.bettercloud.com/" }],
     });
 
+    expect(res).toBeDefined();
     expect(res[0]).toMatchObject({
       code: ruleKeyUnderTest,
       message:
         "Schema and host in URL must match company API standards; url:https://app.bettercloud.com/ incorrect. Example: https://api.bettercloud.com/automation/v1",
-      path: ["servers", "url"],
+      path: ["servers", "0", "url"],
       severity: 0,
     });
   });

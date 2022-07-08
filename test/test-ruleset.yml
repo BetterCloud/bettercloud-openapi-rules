@@ -5,16 +5,14 @@ functions:
   - ensureSnakeCaseWithDigits
   - validateOperationIdNaming
 rules:
-  servers-must-match-api-standards:
-    description: Schema and host in URL must match company API standards
-    given: $.servers..url
-    message: >-
-      {{description}}; {{property}}:{{value}} incorrect. Example:
-      https://api.bettercloud.com/automation/v1
-    resolved: false
+  schema-parameters-must-have-meaningful-id-names:
+    description: >-
+      Meaningful schema ids must be used in the form of {entity}Id. ie
+      customerId, betterCloudUserId
+    given: $.components.schemas..required[?(@ == 'id')]
+    message: '{{description}}'
     severity: error
     then:
       function: pattern
       functionOptions:
-        match: >-
-          ^((https):\/\/)([a-z-]+)([.]+)([a-z]?)bettercloud.com\/[a-z-]+\/v[1-9]+$
+        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$

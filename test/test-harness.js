@@ -8,6 +8,7 @@ const yaml = require("js-yaml");
 const path = require("path");
 
 const testRulesetFilePath = "./test/test-ruleset.yml";
+const spectralFilepath = "./spectral/ruleset.yml";
 
 const testRulesetBaseContent =
   "functionsDir: ../spectral/functions\n" +
@@ -21,7 +22,7 @@ const testRulesetBaseContent =
 
 const prepareTestRules = (ruleKeyUnderTest) => {
   // load the ruleset
-  const doc = yaml.load(fs.readFileSync("./spectral/ruleset.yml", "utf8"));
+  const doc = yaml.load(fs.readFileSync(spectralFilepath, "utf8"));
 
   // identify the rule being tested
   const ruleUnderTest = doc.rules[ruleKeyUnderTest];
