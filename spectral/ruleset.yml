@@ -87,6 +87,15 @@ rules:
     severity: error
     then:
       function: ensurePropertiesExample
+  oas-file-must-define-schemas:
+    description: Every OAS file should define at least one schema component
+    given: $.components.schemas
+    message: '{{description}}; property {{property}} is missing'
+    severity: error
+    then:
+      function: length
+      functionOptions:
+        min: 1
   oas-files-must-have-contact-info:
     description: Every API must have a contact containing name and email
     given: $.info.contact
@@ -389,16 +398,6 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
-  oas-file-must-define-schemas:
-    description: >-
-      Every OAS file should define at least one schema component
-    given: $.components.schemas
-    message: '{{description}}; property {{property}} is missing'
-    severity: error
-    then:
-      function: length
-      functionOptions:
-        min: 1
   servers-must-match-api-standards:
     description: Schema and host in URL must match company API standards
     given: $.servers..url

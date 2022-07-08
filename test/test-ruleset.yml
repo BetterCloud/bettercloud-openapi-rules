@@ -10,7 +10,7 @@ rules:
       Meaningful schema ids must be used in the form of {entity}Id. ie
       customerId, betterCloudUserId
     given: $.components.schemas..required[?(@ == 'id')]
-    message: '{{description}}'
+    message: "{{description}}"
     severity: error
     then:
       function: pattern
