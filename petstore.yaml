@@ -1,8 +1,8 @@
 openapi: "3.0.0"
 info:
-  description: "This is a sample OAS file used to validate the spectral ruleset is in a valid state. This was based of Swagger's Pet Store."
+  description: "This is a running template that will eventually be used for BetterCloud OAS files and for unit testing"
   version: 1.0.0
-  title: Swagger Petstore
+  title: BetterCloud's Template OAS File
   license:
     name: MIT
   contact:
@@ -10,6 +10,8 @@ info:
     name: "DevX"
 servers:
   - url: https://petstore.bettercloud.com/capability/v1
+tags:
+  - name: "pets"
 paths:
   /pets:
     description: "Operations for the Pet resource"
@@ -20,13 +22,12 @@ paths:
       tags:
         - pets
       parameters:
-        - name: testId
+        - name: testDescription
           in: query
           description: How many items to return at one time (max 100)
           required: false
           schema:
-            type: integer
-            format: int32
+            default: ""
           example: 25
         - name: limit
           in: query
@@ -36,24 +37,201 @@ paths:
             type: integer
             format: int32
           example: 25
+      requestBody:
+        description: 'B'
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Error"
+            example:
+              testTimestamp: 123
+              testDescription: "Test Test test"
       responses:
         "200":
           description: A paged array of pets
           headers:
             x-next:
               description: A link to the next page of responses
-              schema:
-                type: string
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Pets"
+              example:
+                - breedId: 123
+                  name: "Fido"
+                  breed: POODLE
+        "401":
+          description: Unauthorized
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
+        "404":
+          description: Not Found
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
+        "429":
+          description: Too many requests
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
+        "500":
+          description: Internal Server Error
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
     post:
       summary: Create a pet
       description: "Creates a pet resource"
@@ -62,7 +240,184 @@ paths:
         - pets
       responses:
         "201":
-          description: Null response
+          description: Should we allow null response bodies when applicable?
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pets"
+              example:
+                - breedId: 123
+                  name: "Fido"
+                  breed: POODLE
+                - breedId: 1234
+                  name: "Bo"
+                  breed: POODLE
+        "401":
+          description: Unauthorized
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
+        "404":
+          description: Not Found
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
+        "429":
+          description: Too many requests
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
+        "500":
+          description: Internal Server Error
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
         default:
           description: unexpected error
           content:
@@ -70,16 +425,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
               example:
-                content:
-                  - id: aaa7d21e-02eb-4bb4-89dd-f855078bd99e
-                    name: Test
-                    description: Testing lint rule for response parameters.
-                    parameters:
-                      - id: 87fba1fa-226a-4f51-b82b-ab08216b1d01
-                        required: true
-                        name: value
-                        type: value
-  /pets/{petId}:
+                testTimestamp: 123
+                testDescription: "Blah blah blah"
+  /testing-kebab/{petId}:
     description: "Operations for a specific pet identified by petId"
     get:
       summary: Info for a specific pet
@@ -94,7 +442,7 @@ paths:
           description: The id of the pet to retrieve
           schema:
             type: string
-            example: "1234"
+          example: "1234"
         - name: Accept-Language
           in: header
           description: "Ut consequat ipsum sit amet ullamcorper congue. Vivamus consequat molestie erat, quis pulvinar eros. Donec non tellus quis neque pretium scelerisque. "
@@ -103,35 +451,195 @@ paths:
           explode: false
           schema:
             type: string
-            example: en
+          example: "en"
       responses:
         "200":
           description: Expected response to a valid request
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Pet"
               example:
-                content:
-                  - id: aaa7d21e-02eb-4bb4-89dd-f855078bd99e
-                    name: Set User's Manager
-                    description: This action sets a user's manager in Salesforce.
-                    parameters:
-                      - id: 87fba1fa-226a-4f51-b82b-ab08216b1d01
-                        required: true
-                        name: testId
-                        type: ID
-                      - id: 908060ce-e3c7-4308-a059-8da6cde39fa1
-                        required: true
-                        name: anotherTestId
-                        type: ID
+                breedId: 123
+                name: "Bojangles"
+                breed: POODLE
+        "401":
+          description: Unauthorized
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
+        "404":
+          description: Not Found
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
+        "429":
+          description: Too many requests
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
+        "500":
+          description: Internal Server Error
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-ID:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: default-global
+            X-Rate-Limit-Remaining:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '491'
+            X-Rate-Limit-Reset:
+              content:
+                text/plain:
+                  schema:
+                    type: string
+                  example: '09/14/2018 17:57:24'
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+              example:
+                testTimestamp: 123
+                testDescription: "test"
 components:
+
   schemas:
     Pet:
       type: object
@@ -141,7 +649,6 @@ components:
         - breed
       properties:
         breedId:
-          type: integer
           format: int64
         name:
           type: string
@@ -155,18 +662,32 @@ components:
             - IRISH_WOLF_HOUND
         tag:
           type: string
+      example:
+        breedId: 123
+        name: Bobo
+        breed: POODLE
     Pets:
       type: array
       items:
         $ref: "#/components/schemas/Pet"
+      example:
+        - breedId: 123
+          name: Bobo
+          breed: POODLE
+        - breedId: 123
+          name: Bobo
+          breed: POODLE
     Error:
       type: object
       required:
-        - code
-        - message
+        - testTimestamp
+        - testDescription
       properties:
-        code:
+        testTimestamp:
           type: integer
           format: int32
-        message:
+        testDescription:
           type: string
+      example:
+        testTimestamp: 123
+        testDescription: "test test test"
