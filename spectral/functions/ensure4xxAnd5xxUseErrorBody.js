@@ -18,7 +18,8 @@ module.exports = (param) => {
   }
 
   // Checking to see if lengths match AND that every value and index match. This is a shallow compare
-  if (!(
+  if (
+    !(
       param.schema.items.required.length === REQUIRED.length &&
       param.schema.items.required.every(function (value, index) {
         return value === REQUIRED[index];
