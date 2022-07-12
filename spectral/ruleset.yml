@@ -9,24 +9,27 @@ functions:
   - ensureSnakeCaseWithDigits
   - validateOperationIdNaming
 rules:
+
   array-params-must-have-items-with-type:
-    description: Array parameters must have an items attribute with a type
+    description: Array parameters must have an items attribute with a type.
     given: $..*.parameters[*]
     message: '{{error}}'
     severity: error
     then:
       function: ensureAllArraysHaveItemTypes
+
   array-properties-must-have-items-with-type:
-    description: Array properties must have an items attribute with a type
+    description: Array properties must have an items attribute with a type.
     given: $..*.properties[*]
     message: '{{error}}'
     severity: error
     then:
       function: ensureAllArraysHaveItemTypes
+
   component-schema-declarations-must-define-examples:
-    description: Every component schema declaration must define at least one example
+    description: Every component schema declaration must define at least one example.
     given: $.components.schemas[*]
-    message: '{{description}}; DTO is lacking an example {{path}}'
+    message: '{{description}}; Data type object is lacking an example {{path}}.'
     severity: error
     then:
       - function: xor
@@ -34,10 +37,9 @@ rules:
           properties:
             - example
             - examples
+
   component-schema-enum-properties-must-be-upper-snake-case:
-    description: >-
-      Enums must be all uppercase with underscores and must not end in an
-      underscore
+    description:  Enums must be all uppercase with underscores and must not end in an underscore.
     given: $.components.schemas..properties..enum[*]
     message: '{{description}}'
     severity: error
@@ -45,8 +47,9 @@ rules:
       function: casing
       functionOptions:
         type: macro
+
   component-schema-keys-must-be-pascal-case:
-    description: schema key must be pascal case (e.g. PascalCase)
+    description: schema key must be PascalCase.
     given: $.components['schemas'].*~
     message: '{{error}}'
     severity: error
@@ -55,8 +58,9 @@ rules:
       functionOptions:
         type: pascal
     type: style
+
   component-schema-parameters-must-be-camel-case:
-    description: Schema parameters must be camelCase
+    description: Schema parameters must be camelCase.
     given: $.components.schemas[*].required[*]
     message: '{{description}}'
     severity: error
@@ -64,10 +68,9 @@ rules:
       function: casing
       functionOptions:
         type: camel
+
   component-schema-parameters-must-have-meaningful-id-names:
-    description: >-
-      Meaningful schema ids must be used in the form of {entity}Id. ie
-      customerId, betterCloudUserId
+    description: Meaningful schema Ids must be used in the form of {entity}Id. For example - customerId, betterCloudUserId
     given: $.components.schemas..required[?(@ == 'id')]
     message: '{{description}}'
     severity: error
@@ -75,29 +78,31 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
+
   component-schema-properties-must-be-camel-case:
-    description: component schema properties MUST be camelCase
+    description: component schema properties must be camelCase.
     given: $.components.schemas[*].properties.*~
     severity: error
     then:
       function: pattern
       functionOptions:
         match: ^[a-z]+[a-zA-Z0-9]*$
+
   component-schemas-must-be-used:
     description: >-
-      DTOs should be used to specify the schema(data types) of a request /
-      response
+      Data object types must be used to specify the schema (data types) of a request response.
     given: $.components.schemas
-    message: '{{description}}; property {{property}} is missing'
+    message: '{{description}}; property {{property}} is missing.'
     severity: error
     then:
       - function: length
         functionOptions:
           min: 1
+
   headers-must-include-examples:
-    description: Headers must include examples
+    description: Headers must include examples.
     given: $.paths[*].*.responses.*.headers.*.content[*]
-    message: '{{description}}; missing {{property}}'
+    message: '{{description}}; missing {{property}}.'
     severity: error
     then:
       - function: xor
@@ -105,22 +110,22 @@ rules:
           properties:
             - example
             - examples
+
   oas-files-must-have-contact-info:
-    description: Every API must have a contact containing name and email
+    description: Every API must have a contact containing name and email.
     given: $.info.contact
-    message: '{{description}}; property {{property}} is missing'
+    message: '{{description}}; property {{property}} is missing.'
     severity: error
     then:
       - field: name
         function: truthy
       - field: email
         function: truthy
+
   oas-files-must-have-global-description:
     description: Every API must have a global description
     given: $.info
-    message: >-
-      OpenAPI object info `description` must be present and at least 100 chars
-      long.
+    message: OpenAPI object info `description` must be present and at least 100 characters long.
     severity: error
     then:
       - field: description
@@ -129,20 +134,18 @@ rules:
         function: length
         functionOptions:
           min: 100
+
   oas-files-must-have-title-starting-with-bettercloud:
-    description: >-
-      OAS Title must begin with "BetterCloud's" (i.e. BetterCloud's Automation
-      API)
+    description: OAS Title must begin with "BetterCloud's". For example - BetterCloud's Automation API
     given: $.info.title
     severity: error
     then:
       function: pattern
       functionOptions:
         match: ^BetterCloud's
+
   oas-files-must-use-version-3.0.x:
-    description: >-
-      OAS files must adhere to an openapi version of 3.0.x. All other versions
-      are not authorized
+    description: OAS files must adhere to an openapi version of 3.0.x. All other versions are not authorized.
     given: $.openapi
     message: '{{description}}'
     severity: error
@@ -150,13 +153,12 @@ rules:
       function: pattern
       functionOptions:
         match: ^(3\.)(0\.)(\d+)$
+
   operation-ids-must-be-camel-case:
-    description: >-
-      Operation IDs must be camelCase since some generators (e.g. RTK Query)
-      don't support kebab-cases.
+    description: The operationId tags must be camelCase since some generators (sucha as RTK Query) don't support kebab-cases.
     given: '#OperationObject'
     message: >-
-      Operation ID "{{value}}" must be camelCase since some generators (e.g. RTK
+      Operation ID "{{value}}" must be camelCase since some generators (such as RTK
       Query) don't support kebab-cases.
     severity: error
     then:
@@ -164,26 +166,29 @@ rules:
       function: casing
       functionOptions:
         type: camel
+
   operationids-must-follow-naming-conventions:
-    description: operationIds must follow naming conventions for method
+    description: The operationId tags must follow naming conventions for method.
     given: $.paths[*]
     message: '{{error}}'
     severity: error
     then:
       function: validateOperationIdNaming
     type: style
+
   parameter-keys-must-be-snake-case:
-    description: parameter key must be snake case (e.g. snake_case)
+    description: Parameter key must be snake_case.
     given: $.components['parameters'].*~
     message: '{{error}}'
     severity: error
     then:
       function: ensureSnakeCaseWithDigits
     type: style
+
   params-must-include-examples:
-    description: Parameters must include examples
+    description: Parameters must include examples.
     given: $..parameters.*
-    message: '{{description}}; missing {{property}}'
+    message: '{{description}}; missing {{property}}.'
     severity: error
     then:
       function: xor
@@ -191,18 +196,20 @@ rules:
         properties:
           - example
           - examples
+
   path-actions-must-have-descriptions-and-summaries:
-    description: Every route of an API should have a description
+    description: Every route of an API must have a description.
     given: $.paths[*][get,post,put,delete]
-    message: '{{description}}; property: {{property}} is missing'
+    message: '{{description}}; property: {{property}} is missing.'
     severity: error
     then:
       - field: description
         function: truthy
       - field: summary
         function: truthy
+
   path-parameters-must-be-camel-case:
-    description: Path parameters must be camelCase
+    description: Path parameters must be camelCase.
     given: $.paths..parameters[?(@.in in ['path', 'query'])].name
     message: '{{description}}'
     severity: error
@@ -210,10 +217,11 @@ rules:
       function: casing
       functionOptions:
         type: camel
+
   path-parameters-must-have-meaningful-description-names:
     description: >-
       Meaningful path parameter description must be used in the form of
-      {entity}Description. ie customerDescription, userDescription
+      {entity}Description. For example - customerDescription, userDescription.
     given: >-
       $.paths..parameters[?(@.in in ['path', 'query'] && @.name in
       ['description'])].name
@@ -223,10 +231,9 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Description$
+
   path-parameters-must-have-meaningful-id-names:
-    description: >-
-      Meaningful path parameter ids must be used in the form of {entity}Id. ie
-      customerId, betterCloudUserId
+    description: Meaningful path parameter ids must be used in the form of {entity}Id. For example - customerId, betterCloudUserId
     given: $.paths..parameters[?(@.in in ['path', 'query'] && @.name in ['id'])].name
     message: '{{description}}'
     severity: error
@@ -234,10 +241,11 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
+
   path-parameters-must-have-meaningful-timestamp-names:
     description: >-
       Meaningful path parameter timestamps must be used in the form of
-      {entity}Timestamp. ie createdTimestamp, updatedTimestamp
+      {entity}Timestamp. For example - createdTimestamp, updatedTimestamp
     given: >-
       $.paths..parameters[?(@.in in ['path', 'query'] && @.name in
       ['timestamp'])].name
@@ -247,38 +255,42 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Timestamp$
+
   path-parameters-must-use-ref:
-    description: Path parameters must be defined in the schema
+    description: Path parameters must be defined in the schema.
     given: $.paths..parameters[*].schema
     message: '{{description}}'
     severity: error
     then:
       - field: $ref
         function: truthy
+
   path-request-body-schemas-must-use-ref:
-    description: endpoints with request bodies must use ref for their schemas
+    description: Endpoints with request bodies must use $ref for their schemas.
     given: >-
       $.paths.[*][get,post,put,delete].requestBody.content.application/json.schema
-    message: '{{description}}; {{property}} incorrect'
+    message: '{{description}}; {{property}} incorrect.'
     resolved: false
     severity: error
     then:
       - field: $ref
         function: truthy
+
   path-response-body-schemas-must-use-ref:
-    description: response bodies no matter the response must use ref for their schemas
+    description: Response bodies no matter the response must use ref for their schemas.
     given: >-
       $.paths.[*][get,post,put,delete].responses[*].content.application/json.schema
-    message: '{{description}}; {{property}} incorrect'
+    message: '{{description}}; {{property}} is incorrect.'
     resolved: false
     severity: error
     then:
       - field: $ref
         function: truthy
+
   path-schema-declarations-must-define-examples:
-    description: Every schema declaration must define at least one example
+    description: Every schema declaration must define at least one example.
     given: $.paths[?(!@property.match(/well-known/ig))]..content.*
-    message: '{{description}}; DTO is lacking an example {{path}}'
+    message: '{{description}}; the data type object is lacking an example {{path}}.'
     severity: error
     then:
       - function: xor
@@ -286,41 +298,43 @@ rules:
           properties:
             - example
             - examples
+
   paths-must-be-kebab-case:
-    description: All YAML/JSON paths MUST follow kebab-case
+    description: All YAML/JSON paths must be kebab-case.
     given: $.paths[*]~
-    message: '{{property}} is not kebab-case: {{error}}'
+    message: '{{property}} is not kebab-case: {{error}}.'
     recommended: true
     severity: error
     then:
       function: pattern
       functionOptions:
         match: ^/([a-z0-9]+(-[a-z0-9]+)*)?(/[a-z0-9]+(-[a-z0-9]+)*|/{.+})*$
+
   paths-must-have-descriptions:
-    description: Every route of an API should have a description
+    description: Every route of an API must have a description.
     given: $.paths[*]
-    message: '{{description}}; property: {{property}} is missing'
+    message: '{{description}}; property: {{property}} is missing.'
     severity: error
     then:
       - field: description
         function: truthy
+
   paths-must-not-use-http-verbs-in-name:
-    description: >-
-      The HTTP Verbs should not be used in the route path to define different
-      actions on a resource
+    description: The HTTP Verbs must not be used in the route path to define different actions on a resource.
     given: $.paths[?(!@property.match(/well-known/ig))]~
     message: >-
       {{description}}; {{property}} Instead use HTTP verbs to define actions on
-      a resource. Example: PUT - /digital-twin/api/v1/products/42
+      a resource. Example: PUT /digital-twin/api/v1/products/42
     severity: error
     then:
       function: pattern
       functionOptions:
         notMatch: \/(get|post|put|patch|delete)(\/|$)
+
   paths-must-specify-tags:
-    description: Every route must specify at least one tag it belongs to
+    description: Every route must specify at least one tag it belongs to.
     given: $.paths[?(!@property.match(/well-known/ig))].*
-    message: '{{description}}; property tags is missing at: {{path}}'
+    message: '{{description}}; property tags is missing at: {{path}}.'
     severity: error
     then:
       - field: tags
@@ -329,23 +343,25 @@ rules:
         function: length
         functionOptions:
           min: 1
+
   properties-must-include-examples:
-    description: Object properties must include examples
+    description: Object properties must include examples.
     given: $..properties..properties.*
     message: '{{error}}'
     severity: error
     then:
       function: ensurePropertiesExample
   response-keys-must-be-snake-case:
-    description: response key must be snake case (e.g. snake_case)
+    description: response key must be snake_case.
     given: $.components['responses'].*~
     message: '{{error}}'
     severity: error
     then:
       function: ensureSnakeCaseWithDigits
     type: style
+
   response-parameters-must-be-camel-case:
-    description: Response parameters must be camelCase
+    description: Response parameters must be camelCase.
     given: $.paths..responses..content[*].parameters[*].name
     message: '{{description}}'
     severity: error
@@ -353,10 +369,11 @@ rules:
       function: casing
       functionOptions:
         type: camel
+
   response-parameters-must-have-meaningful-description-names:
     description: >-
       Meaningful response parameter timestamps must be used in the form of
-      {entity}Description. ie customerDescription, userDescription
+      {entity}Description. For example - customerDescription, userDescription
     given: >-
       $.paths[*]..responses[*].content[*].example.content[*].parameters[?(@.name
       in ['description'])].name
@@ -366,10 +383,11 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Description$
+
   response-parameters-must-have-meaningful-id-names:
     description: >-
       Meaningful response parameter ids must be used in the form of {entity}Id.
-      ie customerId, betterCloudUserId
+      For example - customerId, betterCloudUserId
     given: >-
       $.paths[*]..responses[*].content[*].example.content[*].parameters[?(@.name
       in ['id'])].name
@@ -379,10 +397,11 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
+
   response-parameters-must-have-meaningful-timestamp-names:
     description: >-
       Meaningful response parameter timestamps must be used in the form of
-      {entity}Timestamp. ie createdTimestamp, updatedTimestamp
+      {entity}Timestamp. For example - createdTimestamp, updatedTimestamp
     given: >-
       $.paths[*]..responses[*].content[*].example.content[*].parameters[?(@.name
       in ['timestamp'])].name
@@ -392,23 +411,25 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Timestamp$
+
   response-parameters-must-have-meaningful-value-names:
     description: >-
       Meaningful response parameter values must be used in the form of
-      {entity}Value. ie customerValue, displayValue
+      {entity}Value. For example - customerValue, displayValue
     given: >-
       $.paths[*]..responses[*].content[*].example.content[*].parameters[?(@.name
       in ['value'])].name
-    message: '{{description}}; property {{property}} is missing'
+    message: '{{description}}; property {{property}} is missing.'
     severity: error
     then:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Value$
+
   responses-must-contain-common-response-200-or-201:
-    description: Responses should contain at least one 2xx
+    description: Responses must contain at least one 200-level response. For example - 200, 201
     given: $.paths..responses.*~
-    message: '{{description}}. Missing {{property}}'
+    message: '{{description}}. Missing {{property}}.'
     severity: error
     then:
       - function: xor
@@ -416,44 +437,48 @@ rules:
           properties:
             - 200
             - 201
+
   responses-must-contain-common-response-401:
-    description: Responses should contain common response - 401 (unauthorized)
+    description: Responses must contain common response - 401 (Unauthorized)
     given: $.paths..responses
-    message: '{{description}}. Missing {{property}}'
+    message: '{{description}}. Missing {{property}}.'
     severity: error
     then:
       - field: '401'
         function: truthy
+
   responses-must-contain-common-response-404:
-    description: Responses should contain common response - 404 (not found)
+    description: Responses must contain common response - 404 (Not found)
     given: $.paths..responses
-    message: '{{description}}. Missing {{property}}'
+    message: '{{description}}. Missing {{property}}.'
     severity: error
     then:
       - field: '404'
         function: truthy
   responses-must-contain-common-response-429:
-    description: Responses should contain common response - 429 (too many requests)
+    description: Responses must contain common response - 429 (Too many requests)
     given: $.paths..responses
     message: '{{description}}. Missing {{property}}'
     severity: error
     then:
       - field: '429'
         function: truthy
+
   responses-must-contain-common-response-500:
-    description: Responses should contain common response - 500 (server error)
+    description: Responses must contain common response - 500 (Server error)
     given: $.paths..responses
-    message: '{{description}}. Missing {{property}}'
+    message: '{{description}}. Missing {{property}}.'
     severity: error
     then:
       - field: '500'
         function: truthy
+
   responses-must-have-content-type:
-    description: Every response must specify its content type
+    description: Every response must specify its content type.
     given: $.paths[?(!@property.match(/well-known/ig))]..content
     message: >-
       {{description}}; property {{property}} is missing or not a valid
-      content-type
+      content-type.
     severity: error
     then:
       - field: '@key'
@@ -462,10 +487,11 @@ rules:
         function: pattern
         functionOptions:
           match: /
+
   responses-must-include-ratelimit-headers:
-    description: Response must include ratelimit-x headers
+    description: Response must include ratelimit-x headers.
     given: $.paths..responses[*].headers
-    message: '{{description}}; missing {{property}}'
+    message: '{{description}}; missing {{property}}.'
     severity: error
     then:
       - field: X-Rate-Limit-ID
@@ -474,30 +500,33 @@ rules:
         function: truthy
       - field: X-Rate-Limit-Reset
         function: truthy
+
   responses-must-return-response-body-with-2xx:
     description: >-
       Every route returning a http status code of 200 or 201 must have a
-      response body defined
+      response body defined.
     given: >-
       $.paths[?(!@property.match(/well-known/ig))]..responses[200,201,"200","201"]
-    message: '{{description}}; property {{property}} is missing at path: {{path}}'
+    message: '{{description}}; property {{property}} is missing at path: {{path}}.'
     severity: error
     then:
       - field: content
         function: truthy
       - field: description
         function: truthy
+
   responses-must-use-media-type-json-content-type:
-    description: application/json is the only acceptable content type
+    description: 'application/json' is the only acceptable content type.
     given: $.paths.*.*.responses.*.content
     severity: error
     then:
       field: application/json
       function: truthy
+
   schema-parameters-must-have-meaningful-description-names:
     description: >-
       Meaningful schema timestamps must be used in the form of
-      {entity}Description. ie customerDescription, userDescription
+      {entity}Description. For example - customerDescription, userDescription.
     given: $.components.schemas..required[?(@ == 'description')]
     message: '{{description}}'
     severity: error
@@ -505,10 +534,11 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Description$
+
   schema-parameters-must-have-meaningful-timestamp-names:
     description: >-
       Meaningful schema timestamps must be used in the form of
-      {entity}Timestamp. ie createdTimestamp, updatedTimestamp
+      {entity}Timestamp. For example - createdTimestamp, updatedTimestamp
     given: $.components.schemas..required[?(@ == 'timestamp')]
     message: '{{description}}'
     severity: error
@@ -516,9 +546,10 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Timestamp$
+
   schema-parameters-must-have-meaningful-value-names:
     description: >-
-      Meaningful schema values must be used in the form of {entity}Value. ie
+      Meaningful schema values must be used in the form of {entity}Value. For example - 
       customerValue, displayValue
     given: $.components.schemas..required[?(@ == 'value')]
     message: '{{description}}'
@@ -527,8 +558,9 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Value$
+
   servers-must-match-api-standards:
-    description: Schema and host in URL must match company API standards
+    description: Schema and host in URL must match company API standards.
     given: $.servers..url
     message: >-
       {{description}}; {{property}}:{{value}} incorrect. Example:
