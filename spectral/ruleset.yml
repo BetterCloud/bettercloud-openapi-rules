@@ -193,7 +193,7 @@ rules:
           - examples
   path-actions-must-have-descriptions-and-summaries:
     description: Every route of an API should have a description
-    given: $.paths[*][get,post,put,delete]
+    given: $.paths[*][get,patch,post,put,delete]
     message: '{{description}}; property: {{property}} is missing'
     severity: error
     then:
