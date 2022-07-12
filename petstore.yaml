@@ -27,25 +27,40 @@ paths:
           description: How many items to return at one time (max 100)
           required: false
           schema:
-            default: ""
-          example: 25
+            $ref: "#/components/schemas/Errors"
+          example:
+            - code: 40000
+              description: "test test test"
+              helpLink: "https://testtestetestestestsetsetsetestes"
+            - code: 40000
+              description: "test test test"
+              helpLink: "https://testtestetestestestsetsetsetestes"
         - name: limit
           in: query
           description: How many items to return at one time (max 100)
           required: false
           schema:
-            type: integer
-            format: int32
-          example: 25
+            $ref: "#/components/schemas/Errors"
+          example:
+            - code: 40000
+              description: "test test test"
+              helpLink: "https://testtestetestestestsetsetsetestes"
+            - code: 40000
+              description: "test test test"
+              helpLink: "https://testtestetestestestsetsetsetestes"
       requestBody:
         description: 'B'
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Error"
+              $ref: "#/components/schemas/Errors"
             example:
-              testTimestamp: 123
-              testDescription: "Test Test test"
+              - code: 40000
+                description: "test test test"
+                helpLink: "https://testtestetestestestsetsetsetestes"
+              - code: 40000
+                description: "test test test"
+                helpLink: "https://testtestetestestestsetsetsetestes"
       responses:
         "200":
           description: A paged array of pets
@@ -114,10 +129,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
         "404":
           description: Not Found
           headers:
@@ -149,10 +168,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
         "429":
           description: Too many requests
           headers:
@@ -184,10 +207,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
         "500":
           description: Internal Server Error
           headers:
@@ -219,19 +246,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
     post:
       summary: Create a pet
       description: "Creates a pet resource"
@@ -309,10 +344,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
         "404":
           description: Not Found
           headers:
@@ -344,10 +383,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
         "429":
           description: Too many requests
           headers:
@@ -379,10 +422,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
         "500":
           description: Internal Server Error
           headers:
@@ -414,19 +461,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "Blah blah blah"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
   /testing-kebab/{petId}:
     description: "Operations for a specific pet identified by petId"
     get:
@@ -520,10 +575,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
         "404":
           description: Not Found
           headers:
@@ -555,10 +614,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
         "429":
           description: Too many requests
           headers:
@@ -590,10 +653,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
         "500":
           description: Internal Server Error
           headers:
@@ -625,21 +692,28 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: "#/components/schemas/Errors"
               example:
-                testTimestamp: 123
-                testDescription: "test"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
+                - code: 40000
+                  description: "test test test"
+                  helpLink: "https://testtestetestestestsetsetsetestes"
 components:
-
   schemas:
     Pet:
       type: object
@@ -680,14 +754,29 @@ components:
     Error:
       type: object
       required:
-        - testTimestamp
-        - testDescription
+        - code
+        - description
+        - helpLink
       properties:
-        testTimestamp:
+        code:
           type: integer
           format: int32
-        testDescription:
+        description:
+          type: string
+        helpLink:
           type: string
       example:
-        testTimestamp: 123
-        testDescription: "test test test"
+        code: 40000
+        description: "test test test"
+        helpLink: "https://testtestetestestestsetsetsetestes"
+    Errors:
+      type: array
+      items:
+        $ref: "#/components/schemas/Error"
+      example:
+        - code: 40000
+          description: "test test test"
+          helpLink: "https://testtestetestestestsetsetsetestes"
+        - code: 40000
+          description: "test test test"
+          helpLink: "https://testtestetestestestsetsetsetestes"

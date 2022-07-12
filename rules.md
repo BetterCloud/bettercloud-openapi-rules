@@ -38,6 +38,8 @@ parameter key must be snake case (e.g. snake_case)</details>
 Parameters must include examples</details>
 <details><summary>path-actions-must-have-descriptions-and-summaries (error)</summary>
 Every route of an API should have a description</details>
+<details><summary>path-http-actions-must-be-limited (error)</summary>
+http actions must be limited to get, put, post, delete</details>
 <details><summary>path-parameters-must-be-camel-case (error)</summary>
 Path parameters must be camelCase</details>
 <details><summary>path-parameters-must-have-meaningful-description-names (error)</summary>
@@ -46,12 +48,12 @@ Meaningful path parameter description must be used in the form of {entity}Descri
 Meaningful path parameter ids must be used in the form of {entity}Id. ie customerId, betterCloudUserId</details>
 <details><summary>path-parameters-must-have-meaningful-timestamp-names (error)</summary>
 Meaningful path parameter timestamps must be used in the form of {entity}Timestamp. ie createdTimestamp, updatedTimestamp</details>
-<details><summary>path-parameters-must-use-ref (error)</summary>
-Path parameters must be defined in the schema</details>
 <details><summary>path-request-body-schemas-must-use-ref (error)</summary>
 endpoints with request bodies must use ref for their schemas</details>
 <details><summary>path-response-body-schemas-must-use-ref (error)</summary>
 response bodies no matter the response must use ref for their schemas</details>
+<details><summary>path-responses-must-use-error-object-for-errors (error)</summary>
+When responding on errors, you must wrap that in an ErrorObject</details>
 <details><summary>path-schema-declarations-must-define-examples (error)</summary>
 Every schema declaration must define at least one example</details>
 <details><summary>paths-must-be-kebab-case (error)</summary>

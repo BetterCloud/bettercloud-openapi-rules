@@ -9,6 +9,8 @@ functions:
   - ensureAllArraysHaveItemTypes
   - ensureSnakeCaseWithDigits
   - validateOperationIdNaming
+  - ensureCommonHttpMethods
+  - ensure4xxAnd5xxUseErrorBody
 rules:
   contact-properties: off
   operation-singular-tag: off
