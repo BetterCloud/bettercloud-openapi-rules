@@ -12,6 +12,7 @@ functions:
   - ensureCommonHttpMethods
   - ensure4xxAnd5xxUseErrorBody
   - ensureISOFormat
+  - ensureCommonHttpCodes
 rules:
   contact-properties: off
   operation-singular-tag: off

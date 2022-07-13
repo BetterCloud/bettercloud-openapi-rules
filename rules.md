@@ -54,6 +54,8 @@ Meaningful path parameter timestamps must be used in the form of {entity}Timesta
 Endpoints with request bodies must use $ref for their schemas.</details>
 <details><summary>path-response-body-schemas-must-use-ref (error)</summary>
 Response bodies no matter the response must use ref for their schemas.</details>
+<details><summary>path-responses-must-use-qualified-errors (error)</summary>
+When responding on errors, you must wrap that in an ErrorObject</details>
 <details><summary>path-responses-must-use-error-object-for-errors (error)</summary>
 When responding on errors, you must wrap that in an ErrorObject</details>
 <details><summary>path-schema-declarations-must-define-examples (error)</summary>
