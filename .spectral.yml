@@ -11,6 +11,7 @@ functions:
   - validateOperationIdNaming
   - ensureCommonHttpMethods
   - ensure4xxAnd5xxUseErrorBody
+  - ensureISOFormat
 rules:
   contact-properties: off
   operation-singular-tag: off

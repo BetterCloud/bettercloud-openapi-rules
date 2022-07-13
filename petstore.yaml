@@ -22,45 +22,22 @@ paths:
       tags:
         - pets
       parameters:
-        - name: testDescription
-          in: query
-          description: How many items to return at one time (max 100)
-          required: false
-          schema:
-            $ref: "#/components/schemas/Errors"
-          example:
-            - code: 40000
-              description: "test test test"
-              helpLink: "https://testtestetestestestsetsetsetestes"
-            - code: 40000
-              description: "test test test"
-              helpLink: "https://testtestetestestestsetsetsetestes"
         - name: limit
           in: query
-          description: How many items to return at one time (max 100)
+          description: Wrapper for pet request
           required: false
           schema:
-            $ref: "#/components/schemas/Errors"
-          example:
-            - code: 40000
-              description: "test test test"
-              helpLink: "https://testtestetestestestsetsetsetestes"
-            - code: 40000
-              description: "test test test"
-              helpLink: "https://testtestetestestestsetsetsetestes"
+            format: int32
+            type: integer
+          example: 123
       requestBody:
         description: 'B'
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Errors"
+              $ref: "#/components/schemas/PetRequest"
             example:
-              - code: 40000
-                description: "test test test"
-                helpLink: "https://testtestetestestestsetsetsetestes"
-              - code: 40000
-                description: "test test test"
-                helpLink: "https://testtestetestestestsetsetsetestes"
+              petId: 234
       responses:
         "200":
           description: A paged array of pets
@@ -722,8 +699,9 @@ components:
         - name
         - breed
       properties:
-        breedId:
-          format: int64
+        testTimestamp:
+          format: date-time
+          type: string
         name:
           type: string
         breed:
@@ -780,3 +758,15 @@ components:
         - code: 40000
           description: "test test test"
           helpLink: "https://testtestetestestestsetsetsetestes"
+    PetRequest:
+      type: object
+      required:
+        - petId
+      properties:
+        petId:
+          type: integer
+          format: int32
+        tag:
+          type: string
+      example:
+        petId: 123
