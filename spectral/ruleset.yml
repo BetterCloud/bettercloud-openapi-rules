@@ -294,7 +294,7 @@ rules:
     then:
       function: ensure4xxAnd5xxUseErrorBody
   path-responses-must-use-qualified-errors:
-    description: When responding on errors, you must wrap that in an ErrorObject
+    description: You must only use allowed http response codes
     given: $.paths[*].[*].responses[*]~
     message: "{{error}}"
     severity: error
