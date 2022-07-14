@@ -69,9 +69,7 @@ rules:
       functionOptions:
         type: camel
   component-schema-parameters-must-have-meaningful-id-names:
-    description: >-
-      Meaningful schema Ids must be used in the form of {entity}Id. For example
-      - customerId, betterCloudUserId
+    description: Meaningful schema Ids must be used in the form of {entity}Id. For example - customerId, betterCloudUserId
     given: $.components.schemas..required[?(@ == 'id')]
     message: '{{description}}'
     severity: error
@@ -96,8 +94,7 @@ rules:
       function: ensureISOFormat
   component-schemas-must-be-used:
     description: >-
-      Data object types must be used to specify the schema (data types) of a
-      request response.
+      Data object types must be used to specify the schema (data types) of a request response.
     given: $.components.schemas
     message: '{{description}}; property {{property}} is missing.'
     severity: error
@@ -129,9 +126,7 @@ rules:
   oas-files-must-have-global-description:
     description: Every API must have a global description
     given: $.info
-    message: >-
-      OpenAPI object info `description` must be present and at least 100
-      characters long.
+    message: OpenAPI object info `description` must be present and at least 100 characters long.
     severity: error
     then:
       - field: description
@@ -141,9 +136,7 @@ rules:
         functionOptions:
           min: 100
   oas-files-must-have-title-starting-with-bettercloud:
-    description: >-
-      OAS Title must begin with "BetterCloud's". For example - BetterCloud's
-      Automation API
+    description: OAS Title must begin with "BetterCloud's". For example - BetterCloud's Automation API
     given: $.info.title
     severity: error
     then:
@@ -151,9 +144,7 @@ rules:
       functionOptions:
         match: ^BetterCloud's
   oas-files-must-use-version-3.0.x:
-    description: >-
-      OAS files must adhere to an openapi version of 3.0.x. All other versions
-      are not authorized.
+    description: OAS files must adhere to an openapi version of 3.0.x. All other versions are not authorized.
     given: $.openapi
     message: '{{description}}'
     severity: error
@@ -162,13 +153,11 @@ rules:
       functionOptions:
         match: ^(3\.)(0\.)(\d+)$
   operation-ids-must-be-camel-case:
-    description: >-
-      The operationId tags must be camelCase since some generators (such as RTK
-      Query) don't support kebab-cases.
+    description: The operationId tags must be camelCase since some generators (sucha as RTK Query) don't support kebab-cases.
     given: '#OperationObject'
     message: >-
-      Operation ID "{{value}}" must be camelCase since some generators (such as
-      RTK Query) don't support kebab-cases.
+      Operation ID "{{value}}" must be camelCase since some generators (such as RTK
+      Query) don't support kebab-cases.
     severity: error
     then:
       field: operationId
@@ -242,9 +231,7 @@ rules:
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Description$
   path-parameters-must-have-meaningful-id-names:
-    description: >-
-      Meaningful path parameter ids must be used in the form of {entity}Id. For
-      example - customerId, betterCloudUserId
+    description: Meaningful path parameter ids must be used in the form of {entity}Id. For example - customerId, betterCloudUserId
     given: $.paths..parameters[?(@.in in ['path', 'query'] && @.name in ['id'])].name
     message: '{{description}}'
     severity: error
@@ -330,9 +317,7 @@ rules:
       - field: description
         function: truthy
   paths-must-not-use-http-verbs-in-name:
-    description: >-
-      The HTTP Verbs must not be used in the route path to define different
-      actions on a resource.
+    description: The HTTP Verbs must not be used in the route path to define different actions on a resource.
     given: $.paths[?(!@property.match(/well-known/ig))]~
     message: >-
       {{description}}; {{property}} Instead use HTTP verbs to define actions on
@@ -380,7 +365,7 @@ rules:
         type: camel
   response-parameters-must-have-meaningful-description-names:
     description: >-
-      Meaningful response parameter timestamps must be used in the form of
+      Meaningful response parameter descriptions must be used in the form of
       {entity}Description. For example - customerDescription, userDescription
     given: >-
       $.paths[*]..responses[*].content[*].example.content[*].parameters[?(@.name
@@ -431,9 +416,7 @@ rules:
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Value$
   responses-must-contain-common-response-200-or-201:
-    description: >-
-      Responses must contain at least one 200-level response. For example - 200,
-      201
+    description: Responses must contain at least one 200-level response. For example - 200, 201
     given: $.paths..responses.*~
     message: '{{description}}. Missing {{property}}.'
     severity: error
@@ -523,7 +506,7 @@ rules:
       function: truthy
   schema-parameters-must-have-meaningful-description-names:
     description: >-
-      Meaningful schema timestamps must be used in the form of
+      Meaningful schema description must be used in the form of
       {entity}Description. For example - customerDescription, userDescription.
     given: $.components.schemas..required[?(@ == 'description')]
     message: '{{description}}'
@@ -545,8 +528,8 @@ rules:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Timestamp$
   schema-parameters-must-have-meaningful-value-names:
     description: >-
-      Meaningful schema values must be used in the form of {entity}Value. For
-      example -  customerValue, displayValue
+      Meaningful schema values must be used in the form of {entity}Value. For example - 
+      customerValue, displayValue
     given: $.components.schemas..required[?(@ == 'value')]
     message: '{{description}}'
     severity: error
