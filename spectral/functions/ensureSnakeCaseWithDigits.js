@@ -6,7 +6,7 @@
  *
  */
 
-module.exports = (param, _, paths) => {
+const ensureSnakeCaseWithDigits = (param, _, paths) => {
   const re = RegExp("^[a-z0-9_]+$");
 
   if (re.test(param)) {
@@ -21,3 +21,5 @@ module.exports = (param, _, paths) => {
     },
   ];
 };
+
+export default ensureSnakeCaseWithDigits;

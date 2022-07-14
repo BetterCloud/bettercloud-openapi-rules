@@ -99,12 +99,12 @@ Response must include ratelimit-x headers.</details>
 <details><summary>responses-must-return-response-body-with-2xx (error)</summary>
 Every route returning a http status code of 200 or 201 must have a response body defined.</details>
 <details><summary>responses-must-use-media-type-json-content-type (error)</summary>
-application/json is the only acceptable content type.</details>
+application/json is the only acceptable content type</details>
 <details><summary>schema-parameters-must-have-meaningful-description-names (error)</summary>
 Meaningful schema timestamps must be used in the form of {entity}Description. For example - customerDescription, userDescription.</details>
 <details><summary>schema-parameters-must-have-meaningful-timestamp-names (error)</summary>
 Meaningful schema timestamps must be used in the form of {entity}Timestamp. For example - createdTimestamp, updatedTimestamp</details>
 <details><summary>schema-parameters-must-have-meaningful-value-names (error)</summary>
-Meaningful schema values must be used in the form of {entity}Value. For example -  customerValue, displayValue</details>
+Meaningful schema values must be used in the form of {entity}Value. ie customerValue, displayValue</details>
 <details><summary>servers-must-match-api-standards (error)</summary>
 Schema and host in URL must match company API standards.</details>

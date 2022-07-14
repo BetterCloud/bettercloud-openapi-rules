@@ -19,7 +19,7 @@
  *
  */
 
-module.exports = (item, context, paths) => {
+const ensurePropertiesExample = (item, context, paths) => {
   const target = paths?.target ?? [];
   if (
     target.join(".").includes("properties.properties") ||
@@ -55,3 +55,5 @@ module.exports = (item, context, paths) => {
     ];
   }
 };
+
+export default ensurePropertiesExample;

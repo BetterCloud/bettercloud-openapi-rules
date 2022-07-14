@@ -21,7 +21,7 @@
  * https://github.com/box/box-openapi/blob/184889a4b5b6156e0e2719bd513d93f994c6c50e/src/spectral/ensureAllArraysHaveItemTypes.js
  */
 
-module.exports = (param, context, paths) => {
+const ensureAllArraysHaveItemTypes = (param, context, paths) => {
   // if this is actually a property called properties, ignore
   if ((paths?.target ?? []).join(".").includes("properties.properties")) {
     return;
@@ -54,3 +54,5 @@ module.exports = (param, context, paths) => {
     ];
   }
 };
+
+export default ensureAllArraysHaveItemTypes;
