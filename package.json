@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "document-ruleset": "node utils/documentRuleset.js ./spectral/ruleset.yml",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test-spectral": "",
+    "test": "set NODE_ENV=test&& jest ./test --runInBand --detectOpenHandles --forceExit",
     "validate": "./node_modules/@stoplight/spectral-cli/dist/index.js lint petstore.yaml --ruleset=.spectral.yml",
     "prettier": "prettier --write --ignore-unknown ./**/*",
     "sort-rules": "yaml-sort --input ./spectral/ruleset.yml"
@@ -26,6 +25,10 @@
     "yaml-sort": "^1.2.1"
   },
   "devDependencies": {
+    "@stoplight/spectral-parsers": "^1.0.1",
+    "@stoplight/spectral-ruleset-bundler": "^1.3.0",
+    "@stoplight/spectral-runtime": "^1.1.2",
+    "jest": "^28.1.2",
     "pre-commit": "^1.2.2"
   },
   "pre-commit": [
