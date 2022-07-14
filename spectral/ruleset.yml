@@ -52,7 +52,7 @@ rules:
   component-schema-keys-must-be-pascal-case:
     description: schema key must be PascalCase.
     given: $.components['schemas'].*~
-    message: '{{error}}'
+    message: '{{description}}'
     severity: error
     then:
       function: casing

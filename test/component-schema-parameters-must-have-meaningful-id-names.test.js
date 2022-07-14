@@ -54,7 +54,7 @@ describe(ruleKeyUnderTest, () => {
     expect(res[0]).toMatchObject({
       code: ruleKeyUnderTest,
       message:
-        "Meaningful schema ids must be used in the form of {entity}Id. ie customerId, betterCloudUserId",
+        "Meaningful schema Ids must be used in the form of {entity}Id. For example - customerId, betterCloudUserId",
       path: ["components", "schemas", "Pet", "required", "0"],
       severity: 0,
     });

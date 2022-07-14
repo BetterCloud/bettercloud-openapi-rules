@@ -109,10 +109,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
         "404":
           description: Not Found
@@ -148,10 +148,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
         "429":
           description: Too many requests
@@ -187,10 +187,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
         "500":
           description: Internal Server Error
@@ -226,10 +226,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
         default:
           description: unexpected error
@@ -239,10 +239,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
     post:
       summary: Create a pet
@@ -324,10 +324,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
         "404":
           description: Not Found
@@ -363,10 +363,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
         "429":
           description: Too many requests
@@ -402,10 +402,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
         "500":
           description: Internal Server Error
@@ -441,10 +441,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
         default:
           description: unexpected error
@@ -454,10 +454,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
   /testing-kebab/{petId}:
     description: "Operations for a specific pet identified by petId"
@@ -555,10 +555,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
         "404":
           description: Not Found
@@ -594,10 +594,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
         "429":
           description: Too many requests
@@ -633,10 +633,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
         "500":
           description: Internal Server Error
@@ -672,10 +672,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
         default:
           description: unexpected error
@@ -685,10 +685,10 @@ paths:
                 $ref: "#/components/schemas/Errors"
               example:
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
                 - code: 40000
-                  description: "test test test"
+                  message: "test test test"
                   helpLink: "https://testtestetestestestsetsetsetestes"
 components:
   schemas:
@@ -733,19 +733,19 @@ components:
       type: object
       required:
         - code
-        - description
+        - message
         - helpLink
       properties:
         code:
           type: integer
           format: int32
-        description:
+        message:
           type: string
         helpLink:
           type: string
       example:
         code: 40000
-        description: "test test test"
+        message: "test test test"
         helpLink: "https://testtestetestestestsetsetsetestes"
     Errors:
       type: array
@@ -753,10 +753,10 @@ components:
         $ref: "#/components/schemas/Error"
       example:
         - code: 40000
-          description: "test test test"
+          message: "test test test"
           helpLink: "https://testtestetestestestsetsetsetestes"
         - code: 40000
-          description: "test test test"
+          message: "test test test"
           helpLink: "https://testtestetestestestsetsetsetestes"
     PetRequest:
       type: object

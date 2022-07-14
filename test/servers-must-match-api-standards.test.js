@@ -31,7 +31,7 @@ describe(ruleKeyUnderTest, () => {
     expect(res[0]).toMatchObject({
       code: ruleKeyUnderTest,
       message:
-        "Schema and host in URL must match company API standards; url:https://app.bettercloud.com/ incorrect. Example: https://api.bettercloud.com/automation/v1",
+        "Schema and host in URL must match company API standards.; url:https://app.bettercloud.com/ incorrect. Example: https://api.bettercloud.com/automation/v1",
       path: ["servers", "0", "url"],
       severity: 0,
     });

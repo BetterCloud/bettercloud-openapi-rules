@@ -4,7 +4,7 @@
  *
  */
 
-const REQUIRED = ["code", "description", "helpLink"];
+const REQUIRED = ["code", "message", "helpLink"];
 
 // param.schema.type will have object or array. We are looking for array of errors here
 module.exports = (param) => {
