@@ -1,7 +1,6 @@
 const { setupSpectral } = require("./test-harness");
 
-const ruleKeyUnderTest =
-  "component-schema-enum-properties-must-be-upper-snake-case";
+const ruleKeyUnderTest = "component-schema-keys-must-be-pascal-case";
 
 let spectral;
 
@@ -17,12 +16,6 @@ describe(ruleKeyUnderTest, () => {
           Pet: {
             type: "object",
             required: ["breedId"],
-            properties: {
-              breed: {
-                type: "string",
-                enum: ["POODLE", "BERNESE_MOUNTAIN_DOG"],
-              },
-            },
           },
         },
       },
@@ -31,19 +24,13 @@ describe(ruleKeyUnderTest, () => {
     expect(res).toEqual([]);
   });
 
-  it("Should return an error when an enum is not UPPER_SNAKE_CASE", async () => {
+  it("Should return an error when a schema key is not PascalCase", async () => {
     const res = await spectral.run({
       components: {
         schemas: {
-          Pet: {
+          pet: {
             type: "object",
             required: ["breedId"],
-            properties: {
-              breed: {
-                type: "string",
-                enum: ["POODLE", "fail_Me"],
-              },
-            },
           },
         },
       },
@@ -51,17 +38,8 @@ describe(ruleKeyUnderTest, () => {
     expect(res).toBeDefined();
     expect(res[0]).toMatchObject({
       code: ruleKeyUnderTest,
-      message:
-        "Enums must be all uppercase with underscores and must not end in an underscore.",
-      path: [
-        "components",
-        "schemas",
-        "Pet",
-        "properties",
-        "breed",
-        "enum",
-        "1",
-      ],
+      message: "schema key must be PascalCase.",
+      path: ["components", "schemas", "pet"],
       severity: 0,
     });
   });
