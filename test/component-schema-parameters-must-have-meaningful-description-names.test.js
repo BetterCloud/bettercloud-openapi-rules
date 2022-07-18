@@ -1,6 +1,7 @@
 const { setupSpectral } = require("./test-harness");
 
-const ruleKeyUnderTest = "component-schema-properties-must-be-camel-case";
+const ruleKeyUnderTest =
+  "component-schema-parameters-must-have-meaningful-description-names";
 
 let spectral;
 
@@ -15,7 +16,7 @@ describe(ruleKeyUnderTest, () => {
         schemas: {
           Pet: {
             type: "object",
-            required: ["breedId"],
+            required: ["testDescription"],
             properties: {
               testTimestamp: {
                 format: "date-time",
@@ -30,15 +31,15 @@ describe(ruleKeyUnderTest, () => {
     expect(res).toEqual([]);
   });
 
-  it("Should return an error when a component property is not camelCase", async () => {
+  it("Should return an error when description is used as a component property", async () => {
     const res = await spectral.run({
       components: {
         schemas: {
           Pet: {
             type: "object",
-            required: ["breedId"],
+            required: ["description"],
             properties: {
-              TestTimestamp: {
+              testTimestamp: {
                 format: "date-time",
                 type: "string",
               },
@@ -50,8 +51,9 @@ describe(ruleKeyUnderTest, () => {
     expect(res).toBeDefined();
     expect(res[0]).toMatchObject({
       code: ruleKeyUnderTest,
-      message: "component schema properties must be camelCase.",
-      path: ["components", "schemas", "Pet", "properties", "TestTimestamp"],
+      message:
+        "Meaningful schema description must be used in the form of {entity}Description. For example - customerDescription, userDescription.",
+      path: ["components", "schemas", "Pet", "required", "0"],
       severity: 0,
     });
   });
