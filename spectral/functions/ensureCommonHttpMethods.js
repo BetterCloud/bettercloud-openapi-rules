@@ -5,11 +5,12 @@
  */
 const METHODS = ["options", "head", "trace"];
 
-module.exports = (param, context, paths) => {
+module.exports = (param) => {
   if (METHODS.includes(param)) {
     return [
       {
-        message: "http methods: options, head, and trace are not allowed",
+        message:
+          "the following http methods are not allowed: options, head, and trace",
       },
     ];
   }
