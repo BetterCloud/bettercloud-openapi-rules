@@ -16,6 +16,8 @@ Schema parameters must be camelCase.</details>
 Meaningful schema Ids must be used in the form of {entity}Id. For example - customerId, betterCloudUserId</details>
 <details><summary>component-schema-properties-must-be-camel-case (error)</summary>
 component schema properties must be camelCase.</details>
+<details><summary>component-schema-time-parameters-must-use-iso8601 (error)</summary>
+Time must be represented using ISO8601</details>
 <details><summary>component-schemas-must-be-used (error)</summary>
 Data object types must be used to specify the schema (data types) of a request response.</details>
 <details><summary>headers-must-include-examples (error)</summary>
@@ -38,6 +40,8 @@ Parameter key must be snake_case.</details>
 Parameters must include examples.</details>
 <details><summary>path-actions-must-have-descriptions-and-summaries (error)</summary>
 Every route of an API must have a description.</details>
+<details><summary>path-http-actions-must-be-limited (error)</summary>
+http actions must be limited to get, put, post, delete, and patch</details>
 <details><summary>path-parameters-must-be-camel-case (error)</summary>
 Path parameters must be camelCase.</details>
 <details><summary>path-parameters-must-have-meaningful-description-names (error)</summary>
@@ -46,12 +50,14 @@ Meaningful path parameter description must be used in the form of {entity}Descri
 Meaningful path parameter ids must be used in the form of {entity}Id. For example - customerId, betterCloudUserId</details>
 <details><summary>path-parameters-must-have-meaningful-timestamp-names (error)</summary>
 Meaningful path parameter timestamps must be used in the form of {entity}Timestamp. For example - createdTimestamp, updatedTimestamp</details>
-<details><summary>path-parameters-must-use-ref (error)</summary>
-Path parameters must be defined in the schema.</details>
 <details><summary>path-request-body-schemas-must-use-ref (error)</summary>
 Endpoints with request bodies must use $ref for their schemas.</details>
 <details><summary>path-response-body-schemas-must-use-ref (error)</summary>
 Response bodies no matter the response must use ref for their schemas.</details>
+<details><summary>path-responses-must-use-error-object-schema-for-errors (error)</summary>
+When responding with a 4xx or 5xx, you must add and use the approved error response in the response schema</details>
+<details><summary>path-responses-must-use-qualified-status-codes (error)</summary>
+You must only use allowed http response codes</details>
 <details><summary>path-schema-declarations-must-define-examples (error)</summary>
 Every schema declaration must define at least one example.</details>
 <details><summary>paths-must-be-kebab-case (error)</summary>
@@ -95,7 +101,7 @@ Every route returning a http status code of 200 or 201 must have a response body
 <details><summary>responses-must-use-media-type-json-content-type (error)</summary>
 'application/json' is the only acceptable content type.</details>
 <details><summary>schema-parameters-must-have-meaningful-description-names (error)</summary>
-Meaningful schema timestamps must be used in the form of {entity}Description. For example - customerDescription, userDescription.</details>
+Meaningful schema description must be used in the form of {entity}Description. For example - customerDescription, userDescription.</details>
 <details><summary>schema-parameters-must-have-meaningful-timestamp-names (error)</summary>
 Meaningful schema timestamps must be used in the form of {entity}Timestamp. For example - createdTimestamp, updatedTimestamp</details>
 <details><summary>schema-parameters-must-have-meaningful-value-names (error)</summary>

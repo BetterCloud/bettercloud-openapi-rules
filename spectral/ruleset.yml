@@ -8,6 +8,10 @@ functions:
   - ensureAllArraysHaveItemTypes
   - ensureSnakeCaseWithDigits
   - validateOperationIdNaming
+  - ensureCommonHttpMethods
+  - ensure4xxAnd5xxUseErrorBody
+  - ensureISOFormat
+  - ensureCommonHttpCodes
 rules:
   array-params-must-have-items-with-type:
     description: Array parameters must have an items attribute with a type.
@@ -48,7 +52,7 @@ rules:
   component-schema-keys-must-be-pascal-case:
     description: schema key must be PascalCase.
     given: $.components['schemas'].*~
-    message: '{{error}}'
+    message: '{{description}}'
     severity: error
     then:
       function: casing
@@ -83,6 +87,13 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+[a-zA-Z0-9]*$
+  component-schema-time-parameters-must-use-iso8601:
+    description: Time must be represented using ISO8601
+    given: $.components.schemas..properties
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureISOFormat
   component-schemas-must-be-used:
     description: >-
       Data object types must be used to specify the schema (data types) of a
@@ -201,6 +212,13 @@ rules:
         function: truthy
       - field: summary
         function: truthy
+  path-http-actions-must-be-limited:
+    description: http actions must be limited to get, put, post, delete, and patch
+    given: $.paths[*].[*]~
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureCommonHttpMethods
   path-parameters-must-be-camel-case:
     description: Path parameters must be camelCase.
     given: $.paths..parameters[?(@.in in ['path', 'query'])].name
@@ -247,14 +265,6 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Timestamp$
-  path-parameters-must-use-ref:
-    description: Path parameters must be defined in the schema.
-    given: $.paths..parameters[*].schema
-    message: '{{description}}'
-    severity: error
-    then:
-      - field: $ref
-        function: truthy
   path-request-body-schemas-must-use-ref:
     description: Endpoints with request bodies must use $ref for their schemas.
     given: >-
@@ -275,6 +285,23 @@ rules:
     then:
       - field: $ref
         function: truthy
+  path-responses-must-use-error-object-schema-for-errors:
+    description: >-
+      When responding with a 4xx or 5xx, you must add and use the approved error
+      response in the response schema
+    given: >-
+      $.paths[*].[*].responses["400","401","403","404","429","500"].content['application/json']
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensure4xxAnd5xxUseErrorBody
+  path-responses-must-use-qualified-status-codes:
+    description: You must only use allowed http response codes
+    given: $.paths[*].[*].responses[*]~
+    message: '{{error}}'
+    severity: error
+    then:
+      function: ensureCommonHttpCodes
   path-schema-declarations-must-define-examples:
     description: Every schema declaration must define at least one example.
     given: $.paths[?(!@property.match(/well-known/ig))]..content.*
@@ -498,7 +525,7 @@ rules:
       function: truthy
   schema-parameters-must-have-meaningful-description-names:
     description: >-
-      Meaningful schema timestamps must be used in the form of
+      Meaningful schema description must be used in the form of
       {entity}Description. For example - customerDescription, userDescription.
     given: $.components.schemas..required[?(@ == 'description')]
     message: '{{description}}'
