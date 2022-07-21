@@ -68,17 +68,6 @@ rules:
       function: casing
       functionOptions:
         type: camel
-  component-schema-parameters-must-have-meaningful-description-names:
-    description: >-
-      Meaningful schema description must be used in the form of
-      {entity}Description. For example - customerDescription, userDescription.
-    given: $.components.schemas..required[?(@ == 'description')]
-    message: '{{description}}'
-    severity: error
-    then:
-      function: pattern
-      functionOptions:
-        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Description$
   component-schema-parameters-must-have-meaningful-id-names:
     description: >-
       Meaningful schema Ids must be used in the form of {entity}Id. For example
@@ -90,28 +79,6 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Id$
-  component-schema-parameters-must-have-meaningful-timestamp-names:
-    description: >-
-      Meaningful schema timestamps must be used in the form of
-      {entity}Timestamp. For example - createdTimestamp, updatedTimestamp
-    given: $.components.schemas..required[?(@ == 'timestamp')]
-    message: '{{description}}'
-    severity: error
-    then:
-      function: pattern
-      functionOptions:
-        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Timestamp$
-  component-schema-parameters-must-have-meaningful-value-names:
-    description: >-
-      Meaningful schema values must be used in the form of {entity}Value. For
-      example - customerValue, displayValue
-    given: $.components.schemas..required[?(@ == 'value')]
-    message: '{{description}}'
-    severity: error
-    then:
-      function: pattern
-      functionOptions:
-        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Value$
   component-schema-properties-must-be-camel-case:
     description: component schema properties must be camelCase.
     given: $.components.schemas[*].properties.*~
@@ -224,6 +191,17 @@ rules:
     then:
       function: ensureSnakeCaseWithDigits
     type: style
+  params-must-include-examples:
+    description: Parameters must include examples.
+    given: $..parameters.*
+    message: '{{description}}; missing {{property}}.'
+    severity: error
+    then:
+      function: xor
+      functionOptions:
+        properties:
+          - example
+          - examples
   path-actions-must-have-descriptions-and-summaries:
     description: Every route of an API must have a description.
     given: $.paths[*][get,patch,post,put,delete]
@@ -287,17 +265,6 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Timestamp$
-  path-parameters-must-include-examples:
-    description: Parameters must include examples.
-    given: $.paths.*..parameters.*
-    message: '{{description}}; missing {{property}}.'
-    severity: error
-    then:
-      function: xor
-      functionOptions:
-        properties:
-          - example
-          - examples
   path-request-body-schemas-must-use-ref:
     description: Endpoints with request bodies must use $ref for their schemas.
     given: >-
@@ -547,6 +514,8 @@ rules:
     then:
       - field: content
         function: truthy
+      - field: description
+        function: truthy
   responses-must-use-media-type-json-content-type:
     description: '''application/json'' is the only acceptable content type.'
     given: $.paths.*.*.responses.*.content
@@ -554,6 +523,39 @@ rules:
     then:
       field: application/json
       function: truthy
+  schema-parameters-must-have-meaningful-description-names:
+    description: >-
+      Meaningful schema description must be used in the form of
+      {entity}Description. For example - customerDescription, userDescription.
+    given: $.components.schemas..required[?(@ == 'description')]
+    message: '{{description}}'
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Description$
+  schema-parameters-must-have-meaningful-timestamp-names:
+    description: >-
+      Meaningful schema timestamps must be used in the form of
+      {entity}Timestamp. For example - createdTimestamp, updatedTimestamp
+    given: $.components.schemas..required[?(@ == 'timestamp')]
+    message: '{{description}}'
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Timestamp$
+  schema-parameters-must-have-meaningful-value-names:
+    description: >-
+      Meaningful schema values must be used in the form of {entity}Value. For
+      example - customerValue, displayValue
+    given: $.components.schemas..required[?(@ == 'value')]
+    message: '{{description}}'
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Value$
   servers-must-match-api-standards:
     description: Schema and host in URL must match company API standards.
     given: $.servers..url
