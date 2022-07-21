@@ -6,6 +6,7 @@
 const CODES = [
   "200",
   "201",
+  "204",
   "400",
   "401",
   "403",
@@ -19,7 +20,8 @@ module.exports = (param) => {
     return [
       {
         message:
-          "You must use only use 200, 201, 400, 401, 403, 404, 429, 500 http response codes",
+          "You must use only use the following for http response codes: " +
+          CODES,
       },
     ];
   }

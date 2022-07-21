@@ -41,7 +41,7 @@ Parameters must include examples.</details>
 <details><summary>path-actions-must-have-descriptions-and-summaries (error)</summary>
 Every route of an API must have a description.</details>
 <details><summary>path-http-actions-must-be-limited (error)</summary>
-http actions must be limited to get, put, post, delete</details>
+http actions must be limited to get, put, post, delete, and patch</details>
 <details><summary>path-parameters-must-be-camel-case (error)</summary>
 Path parameters must be camelCase.</details>
 <details><summary>path-parameters-must-have-meaningful-description-names (error)</summary>
@@ -54,9 +54,9 @@ Meaningful path parameter timestamps must be used in the form of {entity}Timesta
 Endpoints with request bodies must use $ref for their schemas.</details>
 <details><summary>path-response-body-schemas-must-use-ref (error)</summary>
 Response bodies no matter the response must use ref for their schemas.</details>
-<details><summary>path-responses-must-use-error-object-for-errors (error)</summary>
-When responding on errors, you must wrap that in an ErrorObject</details>
-<details><summary>path-responses-must-use-qualified-errors (error)</summary>
+<details><summary>path-responses-must-use-error-object-schema-for-errors (error)</summary>
+When responding with a 4xx or 5xx, you must add and use the approved error response in the response schema</details>
+<details><summary>path-responses-must-use-qualified-status-codes (error)</summary>
 You must only use allowed http response codes</details>
 <details><summary>path-schema-declarations-must-define-examples (error)</summary>
 Every schema declaration must define at least one example.</details>

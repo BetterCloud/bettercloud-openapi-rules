@@ -235,7 +235,7 @@ rules:
       - field: summary
         function: truthy
   path-http-actions-must-be-limited:
-    description: http actions must be limited to get, put, post, delete
+    description: http actions must be limited to get, put, post, delete, and patch
     given: $.paths[*].[*]~
     message: '{{error}}'
     severity: error
@@ -318,15 +318,17 @@ rules:
     then:
       - field: $ref
         function: truthy
-  path-responses-must-use-error-object-for-errors:
-    description: When responding on errors, you must wrap that in an ErrorObject
+  path-responses-must-use-error-object-schema-for-errors:
+    description: >-
+      When responding with a 4xx or 5xx, you must add and use the approved error
+      response in the response schema
     given: >-
       $.paths[*].[*].responses["400","401","403","404","429","500"].content['application/json']
     message: '{{error}}'
     severity: error
     then:
       function: ensure4xxAnd5xxUseErrorBody
-  path-responses-must-use-qualified-errors:
+  path-responses-must-use-qualified-status-codes:
     description: You must only use allowed http response codes
     given: $.paths[*].[*].responses[*]~
     message: '{{error}}'
