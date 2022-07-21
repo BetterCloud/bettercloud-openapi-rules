@@ -1,7 +1,7 @@
 const { setupSpectral } = require("./test-harness");
 
 const ruleKeyUnderTest =
-  "component-schema-enum-properties-must-be-upper-snake-case";
+  "component-schema-parameters-must-have-meaningful-timestamp-names";
 
 let spectral;
 
@@ -16,11 +16,11 @@ describe(ruleKeyUnderTest, () => {
         schemas: {
           Pet: {
             type: "object",
-            required: ["breedId"],
+            required: ["testTimestamp"],
             properties: {
-              breed: {
+              testTimestamp: {
+                format: "date-time",
                 type: "string",
-                enum: ["POODLE", "BERNESE_MOUNTAIN_DOG"],
               },
             },
           },
@@ -31,17 +31,17 @@ describe(ruleKeyUnderTest, () => {
     expect(res).toEqual([]);
   });
 
-  it("Should return an error when an enum is not UPPER_SNAKE_CASE", async () => {
+  it("Should return an error when timestamp is used as a component property", async () => {
     const res = await spectral.run({
       components: {
         schemas: {
           Pet: {
             type: "object",
-            required: ["breedId"],
+            required: ["timestamp"],
             properties: {
-              breed: {
+              testTimestamp: {
+                format: "date-time",
                 type: "string",
-                enum: ["POODLE", "fail_Me"],
               },
             },
           },
@@ -52,16 +52,8 @@ describe(ruleKeyUnderTest, () => {
     expect(res[0]).toMatchObject({
       code: ruleKeyUnderTest,
       message:
-        "Enums must be all uppercase with underscores and must not end in an underscore.",
-      path: [
-        "components",
-        "schemas",
-        "Pet",
-        "properties",
-        "breed",
-        "enum",
-        "1",
-      ],
+        "Meaningful schema timestamps must be used in the form of {entity}Timestamp. For example - createdTimestamp, updatedTimestamp",
+      path: ["components", "schemas", "Pet", "required", "0"],
       severity: 0,
     });
   });

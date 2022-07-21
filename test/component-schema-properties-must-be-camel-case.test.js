@@ -1,7 +1,6 @@
 const { setupSpectral } = require("./test-harness");
 
-const ruleKeyUnderTest =
-  "component-schema-enum-properties-must-be-upper-snake-case";
+const ruleKeyUnderTest = "component-schema-properties-must-be-camel-case";
 
 let spectral;
 
@@ -18,9 +17,9 @@ describe(ruleKeyUnderTest, () => {
             type: "object",
             required: ["breedId"],
             properties: {
-              breed: {
+              testTimestamp: {
+                format: "date-time",
                 type: "string",
-                enum: ["POODLE", "BERNESE_MOUNTAIN_DOG"],
               },
             },
           },
@@ -31,7 +30,7 @@ describe(ruleKeyUnderTest, () => {
     expect(res).toEqual([]);
   });
 
-  it("Should return an error when an enum is not UPPER_SNAKE_CASE", async () => {
+  it("Should return an error when a component property is not camelCase", async () => {
     const res = await spectral.run({
       components: {
         schemas: {
@@ -39,9 +38,9 @@ describe(ruleKeyUnderTest, () => {
             type: "object",
             required: ["breedId"],
             properties: {
-              breed: {
+              TestTimestamp: {
+                format: "date-time",
                 type: "string",
-                enum: ["POODLE", "fail_Me"],
               },
             },
           },
@@ -51,17 +50,8 @@ describe(ruleKeyUnderTest, () => {
     expect(res).toBeDefined();
     expect(res[0]).toMatchObject({
       code: ruleKeyUnderTest,
-      message:
-        "Enums must be all uppercase with underscores and must not end in an underscore.",
-      path: [
-        "components",
-        "schemas",
-        "Pet",
-        "properties",
-        "breed",
-        "enum",
-        "1",
-      ],
+      message: "component schema properties must be camelCase.",
+      path: ["components", "schemas", "Pet", "properties", "TestTimestamp"],
       severity: 0,
     });
   });
