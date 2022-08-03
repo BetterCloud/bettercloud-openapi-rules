@@ -4,6 +4,8 @@
 Array parameters must have an items attribute with a type.</details>
 <details><summary>array-properties-must-have-items-with-type (error)</summary>
 Array properties must have an items attribute with a type.</details>
+<details><summary>component-parameters-must-include-examples (error)</summary>
+Parameters must include examples.</details>
 <details><summary>component-schema-declarations-must-define-examples (error)</summary>
 Every component schema declaration must define at least one example.</details>
 <details><summary>component-schema-enum-properties-must-be-upper-snake-case (error)</summary>
@@ -34,8 +36,6 @@ OAS files must adhere to an openapi version of 3.0.x. All other versions are not
 The operationId tags must be camelCase since some generators (sucha as RTK Query) don't support kebab-cases.</details>
 <details><summary>operationids-must-follow-naming-conventions (error)</summary>
 The operationId tags must follow naming conventions for method.</details>
-<details><summary>component-parameters-must-include-examples (error)</summary>
-Parameters must include examples.</details>
 <details><summary>path-actions-must-have-descriptions-and-summaries (error)</summary>
 Every route of an API must have a description.</details>
 <details><summary>path-http-actions-must-be-limited (error)</summary>
