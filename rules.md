@@ -34,9 +34,7 @@ OAS files must adhere to an openapi version of 3.0.x. All other versions are not
 The operationId tags must be camelCase since some generators (sucha as RTK Query) don't support kebab-cases.</details>
 <details><summary>operationids-must-follow-naming-conventions (error)</summary>
 The operationId tags must follow naming conventions for method.</details>
-<details><summary>parameter-keys-must-be-snake-case (error)</summary>
-Parameter key must be snake_case.</details>
-<details><summary>params-must-include-examples (error)</summary>
+<details><summary>component-parameters-must-include-examples (error)</summary>
 Parameters must include examples.</details>
 <details><summary>path-actions-must-have-descriptions-and-summaries (error)</summary>
 Every route of an API must have a description.</details>
@@ -58,8 +56,6 @@ Response bodies no matter the response must use ref for their schemas.</details>
 When responding with a 4xx or 5xx, you must add and use the approved error response in the response schema</details>
 <details><summary>path-responses-must-use-qualified-status-codes (error)</summary>
 You must only use allowed http response codes</details>
-<details><summary>path-schema-declarations-must-define-examples (error)</summary>
-Every schema declaration must define at least one example.</details>
 <details><summary>paths-must-be-kebab-case (error)</summary>
 All YAML/JSON paths must be kebab-case.</details>
 <details><summary>paths-must-have-descriptions (error)</summary>
@@ -68,10 +64,6 @@ Every route of an API must have a description.</details>
 The HTTP Verbs must not be used in the route path to define different actions on a resource.</details>
 <details><summary>paths-must-specify-tags (error)</summary>
 Every route must specify at least one tag it belongs to.</details>
-<details><summary>properties-must-include-examples (error)</summary>
-Object properties must include examples.</details>
-<details><summary>response-keys-must-be-snake-case (error)</summary>
-response key must be snake_case.</details>
 <details><summary>response-parameters-must-be-camel-case (error)</summary>
 Response parameters must be camelCase.</details>
 <details><summary>response-parameters-must-have-meaningful-description-names (error)</summary>
@@ -92,8 +84,6 @@ Responses must contain common response - 404 (Not found)</details>
 Responses must contain common response - 429 (Too many requests)</details>
 <details><summary>responses-must-contain-common-response-500 (error)</summary>
 Responses must contain common response - 500 (Server error)</details>
-<details><summary>responses-must-have-content-type (error)</summary>
-Every response must specify its content type.</details>
 <details><summary>responses-must-include-ratelimit-headers (error)</summary>
 Response must include ratelimit-x headers.</details>
 <details><summary>responses-must-return-response-body-with-2xx (error)</summary>

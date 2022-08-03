@@ -27,6 +27,17 @@ rules:
     severity: error
     then:
       function: ensureAllArraysHaveItemTypes
+  component-parameters-must-include-examples:
+    description: Parameters must include examples.
+    given: $.components.parameters.*
+    message: '{{description}}; missing {{property}}.'
+    severity: error
+    then:
+      function: xor
+      functionOptions:
+        properties:
+          - example
+          - examples
   component-schema-declarations-must-define-examples:
     description: Every component schema declaration must define at least one example.
     given: $.components.schemas[*]
@@ -183,25 +194,6 @@ rules:
     then:
       function: validateOperationIdNaming
     type: style
-  parameter-keys-must-be-snake-case:
-    description: Parameter key must be snake_case.
-    given: $.components['parameters'].*~
-    message: '{{error}}'
-    severity: error
-    then:
-      function: ensureSnakeCaseWithDigits
-    type: style
-  params-must-include-examples:
-    description: Parameters must include examples.
-    given: $..parameters.*
-    message: '{{description}}; missing {{property}}.'
-    severity: error
-    then:
-      function: xor
-      functionOptions:
-        properties:
-          - example
-          - examples
   path-actions-must-have-descriptions-and-summaries:
     description: Every route of an API must have a description.
     given: $.paths[*][get,patch,post,put,delete]
@@ -302,17 +294,6 @@ rules:
     severity: error
     then:
       function: ensureCommonHttpCodes
-  path-schema-declarations-must-define-examples:
-    description: Every schema declaration must define at least one example.
-    given: $.paths[?(!@property.match(/well-known/ig))]..content.*
-    message: '{{description}}; the data type object is lacking an example {{path}}.'
-    severity: error
-    then:
-      - function: xor
-        functionOptions:
-          properties:
-            - example
-            - examples
   paths-must-be-kebab-case:
     description: All YAML/JSON paths must be kebab-case.
     given: $.paths[*]~
@@ -356,21 +337,6 @@ rules:
         function: length
         functionOptions:
           min: 1
-  properties-must-include-examples:
-    description: Object properties must include examples.
-    given: $..properties..properties.*
-    message: '{{error}}'
-    severity: error
-    then:
-      function: ensurePropertiesExample
-  response-keys-must-be-snake-case:
-    description: response key must be snake_case.
-    given: $.components['responses'].*~
-    message: '{{error}}'
-    severity: error
-    then:
-      function: ensureSnakeCaseWithDigits
-    type: style
   response-parameters-must-be-camel-case:
     description: Response parameters must be camelCase.
     given: $.paths..responses..content[*].parameters[*].name
@@ -477,20 +443,6 @@ rules:
     then:
       - field: '500'
         function: truthy
-  responses-must-have-content-type:
-    description: Every response must specify its content type.
-    given: $.paths[?(!@property.match(/well-known/ig))]..content
-    message: >-
-      {{description}}; property {{property}} is missing or not a valid
-      content-type.
-    severity: error
-    then:
-      - field: '@key'
-        function: truthy
-      - field: '@key'
-        function: pattern
-        functionOptions:
-          match: /
   responses-must-include-ratelimit-headers:
     description: Response must include ratelimit-x headers.
     given: $.paths..responses[*].headers
@@ -568,4 +520,4 @@ rules:
       function: pattern
       functionOptions:
         match: >-
-          ^((https):\/\/)([a-z-]+)([.]+)([a-z]?)bettercloud.com\/[a-z-]+\/v[1-9]+$
+          ^((https):\/\/)(x-holding|x-staging|api)([.]+)(bettercloud.com|devbettercloud.com)\/[a-z-]+\/v[1-9]+$
