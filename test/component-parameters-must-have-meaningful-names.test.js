@@ -1,7 +1,6 @@
 const { setupSpectral } = require("./test-harness");
 
-const ruleKeyUnderTest =
-  "path-parameters-must-have-meaningful-description-names";
+const ruleKeyUnderTest = "component-parameters-must-have-meaningful-names";
 
 let spectral;
 
@@ -12,10 +11,11 @@ describe(ruleKeyUnderTest, () => {
 
   it("should not return any results for a valid input", async () => {
     const res = await spectral.run({
-      paths: {
-        "/pets": {
-          get: {
-            parameters: [{ name: "testDescription", in: "path" }],
+      components: {
+        parameters: {
+          petId: {
+            name: "petDescription",
+            in: "path",
           },
         },
       },
@@ -26,10 +26,11 @@ describe(ruleKeyUnderTest, () => {
 
   it("Should return an error when 'description' is used as a parameter name", async () => {
     const res = await spectral.run({
-      paths: {
-        "/pets": {
-          get: {
-            parameters: [{ name: "description", in: "path" }],
+      components: {
+        parameters: {
+          petId: {
+            name: "description",
+            in: "path",
           },
         },
       },
@@ -38,8 +39,8 @@ describe(ruleKeyUnderTest, () => {
     expect(res[0]).toMatchObject({
       code: ruleKeyUnderTest,
       message:
-        "Meaningful path parameter description must be used in the form of {entity}Description. For example - customerDescription, userDescription.",
-      path: ["paths", "/pets", "get", "parameters", "0", "name"],
+        "Must use meaningful description names for parameters. Meaningful parameter names must be used in the form of {entity}Id, {entity}Description, {entity}Timestamp",
+      path: ["components", "parameters", "petId", "name"],
       severity: 0,
     });
   });

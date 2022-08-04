@@ -1,6 +1,6 @@
 const { setupSpectral } = require("./test-harness");
 
-const ruleKeyUnderTest = "path-parameters-must-have-meaningful-timestamp-names";
+const ruleKeyUnderTest = "path-parameters-must-use-ref";
 
 let spectral;
 
@@ -14,7 +14,15 @@ describe(ruleKeyUnderTest, () => {
       paths: {
         "/pets": {
           get: {
-            parameters: [{ name: "testTimestamp", in: "path" }],
+            parameters: [{ $ref: "#/components/parameters/petId" }],
+          },
+        },
+      },
+      components: {
+        parameters: {
+          petId: {
+            name: "petId",
+            in: "path",
           },
         },
       },
@@ -23,12 +31,12 @@ describe(ruleKeyUnderTest, () => {
     expect(res).toEqual([]);
   });
 
-  it("Should return an error when 'timestamp' is used as a parameter name", async () => {
+  it("Should return an error when $ref is not used for schemas", async () => {
     const res = await spectral.run({
       paths: {
         "/pets": {
           get: {
-            parameters: [{ name: "timestamp", in: "path" }],
+            parameters: [{ name: "testId", in: "query" }],
           },
         },
       },
@@ -37,8 +45,8 @@ describe(ruleKeyUnderTest, () => {
     expect(res[0]).toMatchObject({
       code: ruleKeyUnderTest,
       message:
-        "Meaningful path parameter timestamps must be used in the form of {entity}Timestamp. For example - createdTimestamp, updatedTimestamp",
-      path: ["paths", "/pets", "get", "parameters", "0", "name"],
+        "Query and Path parameters must use $ref for their schemas.; 0 incorrect.",
+      path: ["paths", "/pets", "get", "parameters", "0"],
       severity: 0,
     });
   });

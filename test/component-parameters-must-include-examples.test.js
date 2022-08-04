@@ -1,6 +1,6 @@
 const { setupSpectral } = require("./test-harness");
 
-const ruleKeyUnderTest = "path-parameters-must-be-camel-case";
+const ruleKeyUnderTest = "component-parameters-must-include-examples";
 
 let spectral;
 
@@ -11,10 +11,12 @@ describe(ruleKeyUnderTest, () => {
 
   it("should not return any results for a valid input", async () => {
     const res = await spectral.run({
-      paths: {
-        "/pets": {
-          get: {
-            parameters: [{ name: "testParam", in: "path" }],
+      components: {
+        parameters: {
+          petId: {
+            name: "petId",
+            in: "path",
+            example: 123,
           },
         },
       },
@@ -23,12 +25,13 @@ describe(ruleKeyUnderTest, () => {
     expect(res).toEqual([]);
   });
 
-  it("Should return an error when path parameter is not camelCase", async () => {
+  it("Should return an error when an example is not used with a parameter", async () => {
     const res = await spectral.run({
-      paths: {
-        "/pets": {
-          get: {
-            parameters: [{ name: "FalseTestParam", in: "path" }],
+      components: {
+        parameters: {
+          petId: {
+            name: "petId",
+            in: "path",
           },
         },
       },
@@ -36,8 +39,8 @@ describe(ruleKeyUnderTest, () => {
     expect(res).toBeDefined();
     expect(res[0]).toMatchObject({
       code: ruleKeyUnderTest,
-      message: "Path parameters must be camelCase.",
-      path: ["paths", "/pets", "get", "parameters", "0", "name"],
+      message: "Parameters must include examples.; missing petId.",
+      path: ["components", "parameters", "petId"],
       severity: 0,
     });
   });
