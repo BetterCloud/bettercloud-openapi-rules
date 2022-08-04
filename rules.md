@@ -4,6 +4,10 @@
 Array parameters must have an items attribute with a type.</details>
 <details><summary>array-properties-must-have-items-with-type (error)</summary>
 Array properties must have an items attribute with a type.</details>
+<details><summary>component-parameters-must-be-camel-case (error)</summary>
+Component parameters must be camelCase.</details>
+<details><summary>component-parameters-must-have-meaningful-names (error)</summary>
+Meaningful parameter names must be used in the form of {entity}Id, {entity}Description, {entity}Timestamp</details>
 <details><summary>component-parameters-must-include-examples (error)</summary>
 Parameters must include examples.</details>
 <details><summary>component-schema-declarations-must-define-examples (error)</summary>
@@ -14,8 +18,14 @@ Enums must be all uppercase with underscores and must not end in an underscore.<
 schema key must be PascalCase.</details>
 <details><summary>component-schema-parameters-must-be-camel-case (error)</summary>
 Schema parameters must be camelCase.</details>
+<details><summary>component-schema-parameters-must-have-meaningful-description-names (error)</summary>
+Meaningful schema description must be used in the form of {entity}Description. For example - customerDescription, userDescription.</details>
 <details><summary>component-schema-parameters-must-have-meaningful-id-names (error)</summary>
 Meaningful schema Ids must be used in the form of {entity}Id. For example - customerId, betterCloudUserId</details>
+<details><summary>component-schema-parameters-must-have-meaningful-timestamp-names (error)</summary>
+Meaningful schema timestamps must be used in the form of {entity}Timestamp. For example - createdTimestamp, updatedTimestamp</details>
+<details><summary>component-schema-parameters-must-have-meaningful-value-names (error)</summary>
+Meaningful schema values must be used in the form of {entity}Value. For example - customerValue, displayValue</details>
 <details><summary>component-schema-properties-must-be-camel-case (error)</summary>
 component schema properties must be camelCase.</details>
 <details><summary>component-schema-time-parameters-must-use-iso8601 (error)</summary>
@@ -40,14 +50,8 @@ The operationId tags must follow naming conventions for method.</details>
 Every route of an API must have a description.</details>
 <details><summary>path-http-actions-must-be-limited (error)</summary>
 http actions must be limited to get, put, post, delete, and patch</details>
-<details><summary>path-parameters-must-be-camel-case (error)</summary>
-Path parameters must be camelCase.</details>
-<details><summary>path-parameters-must-have-meaningful-description-names (error)</summary>
-Meaningful path parameter description must be used in the form of {entity}Description. For example - customerDescription, userDescription.</details>
-<details><summary>path-parameters-must-have-meaningful-id-names (error)</summary>
-Meaningful path parameter ids must be used in the form of {entity}Id. For example - customerId, betterCloudUserId</details>
-<details><summary>path-parameters-must-have-meaningful-timestamp-names (error)</summary>
-Meaningful path parameter timestamps must be used in the form of {entity}Timestamp. For example - createdTimestamp, updatedTimestamp</details>
+<details><summary>path-parameters-must-use-ref (error)</summary>
+Query and Path parameters must use $ref for their schemas.</details>
 <details><summary>path-request-body-schemas-must-use-ref (error)</summary>
 Endpoints with request bodies must use $ref for their schemas.</details>
 <details><summary>path-response-body-schemas-must-use-ref (error)</summary>
@@ -90,11 +94,5 @@ Response must include ratelimit-x headers.</details>
 Every route returning a http status code of 200 or 201 must have a response body defined.</details>
 <details><summary>responses-must-use-media-type-json-content-type (error)</summary>
 'application/json' is the only acceptable content type.</details>
-<details><summary>schema-parameters-must-have-meaningful-description-names (error)</summary>
-Meaningful schema description must be used in the form of {entity}Description. For example - customerDescription, userDescription.</details>
-<details><summary>schema-parameters-must-have-meaningful-timestamp-names (error)</summary>
-Meaningful schema timestamps must be used in the form of {entity}Timestamp. For example - createdTimestamp, updatedTimestamp</details>
-<details><summary>schema-parameters-must-have-meaningful-value-names (error)</summary>
-Meaningful schema values must be used in the form of {entity}Value. For example - customerValue, displayValue</details>
 <details><summary>servers-must-match-api-standards (error)</summary>
 Schema and host in URL must match company API standards.</details>

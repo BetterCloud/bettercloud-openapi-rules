@@ -13,6 +13,8 @@ functions:
   - ensure4xxAnd5xxUseErrorBody
   - ensureISOFormat
   - ensureCommonHttpCodes
+  - ensureMeaningfulParameterNames
+  - ensureParametersUseRef
 rules:
   contact-properties: off
   operation-singular-tag: off

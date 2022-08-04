@@ -18,6 +18,8 @@ const testRulesetBaseContent =
   "  - ensureAllArraysHaveItemTypes\n" +
   "  - ensureSnakeCaseWithDigits\n" +
   "  - validateOperationIdNaming\n" +
+  "  - ensureMeaningfulParameterNames\n" +
+  "  - ensureParametersUseRef\n" +
   "rules:\n";
 
 const prepareTestRules = (ruleKeyUnderTest) => {
