@@ -300,6 +300,7 @@ rules:
       $.paths[*].[*].responses["400","401","403","404","429","500"].content['application/json']
     message: '{{error}}'
     severity: error
+    resolved: false
     then:
       function: ensure4xxAnd5xxUseErrorBody
   path-responses-must-use-qualified-status-codes:
