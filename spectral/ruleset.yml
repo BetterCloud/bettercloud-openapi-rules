@@ -299,6 +299,7 @@ rules:
     given: >-
       $.paths[*].[*].responses["400","401","403","404","429","500"].content['application/json']
     message: '{{error}}'
+    resolved: false
     severity: error
     then:
       function: ensure4xxAnd5xxUseErrorBody
