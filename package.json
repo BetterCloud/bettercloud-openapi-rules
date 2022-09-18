@@ -6,7 +6,7 @@
   "scripts": {
     "document-ruleset": "node utils/documentRuleset.js ./spectral/ruleset.yml",
     "test": "set NODE_ENV=test&& jest ./test --runInBand --detectOpenHandles --forceExit",
-    "validate": "./node_modules/@stoplight/spectral-cli/dist/index.js lint petstore.yaml --ruleset=.spectral.yml",
+    "validate": "spectral lint petstore.yaml --ruleset=.spectral.yml",
     "prettier": "prettier --write --ignore-unknown ./**/*",
     "sort-rules": "yaml-sort --input ./spectral/ruleset.yml"
   },
@@ -17,9 +17,7 @@
   "author": "devx@bettercloud.com",
   "license": "ISC",
   "dependencies": {
-    "@stoplight/spectral": "^6.1.0",
     "@stoplight/spectral-cli": "^6.4.0",
-    "@stoplight/spectral-core": "^1.12.2",
     "js-yaml": "^4.1.0",
     "prettier": "^2.6.2",
     "yaml-sort": "^1.2.1"
