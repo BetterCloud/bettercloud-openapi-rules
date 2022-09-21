@@ -171,7 +171,7 @@ rules:
           min: 1
   headers-must-include-examples:
     description: Headers must include examples.
-    given: $.paths[*].*.responses.*.headers.*.content[*]
+    given: $.paths[*].*.responses.*.headers[*]
     message: '{{description}}; missing {{property}}.'
     severity: error
     then:
@@ -425,8 +425,16 @@ rules:
       - function: xor
         functionOptions:
           properties:
-            - 200
-            - 201
+            - '200'
+            - '201'
+  responses-must-contain-common-response-400:
+    description: Responses must contain common response - 400 (Bad Request)
+    given: $.paths..responses
+    message: '{{description}}. Missing {{property}}.'
+    severity: error
+    then:
+      - field: '400'
+        function: truthy
   responses-must-contain-common-response-401:
     description: Responses must contain common response - 401 (Unauthorized)
     given: $.paths..responses
@@ -435,6 +443,14 @@ rules:
     then:
       - field: '401'
         function: truthy
+  responses-must-contain-common-response-403:
+    description: Responses must contain common response - 403 (Forbidden)
+    given: $.paths..responses
+    message: '{{description}}. Missing {{property}}.'
+    severity: error
+    then:
+      - field: '403'
+        function: truthy
   responses-must-contain-common-response-404:
     description: Responses must contain common response - 404 (Not found)
     given: $.paths..responses
@@ -442,6 +458,22 @@ rules:
     severity: error
     then:
       - field: '404'
+        function: truthy
+  responses-must-contain-common-response-406:
+    description: Responses must contain common response - 406 (Not Acceptable)
+    given: $.paths..responses
+    message: '{{description}}. Missing {{property}}.'
+    severity: error
+    then:
+      - field: '406'
+        function: truthy
+  responses-must-contain-common-response-415-for-post-and-put:
+    description: Responses must contain common response - 415 (Unsupported Media)
+    given: $.paths..["post","put"].responses
+    message: '{{description}}. Missing {{property}}.'
+    severity: error
+    then:
+      - field: '415'
         function: truthy
   responses-must-contain-common-response-429:
     description: Responses must contain common response - 429 (Too many requests)
@@ -461,7 +493,7 @@ rules:
         function: truthy
   responses-must-include-ratelimit-headers:
     description: Response must include ratelimit-x headers.
-    given: $.paths..responses[*].headers
+    given: $.paths[*].*.responses.*.headers
     message: '{{description}}; missing {{property}}.'
     severity: error
     then:
@@ -497,7 +529,6 @@ rules:
     message: >-
       {{description}}; {{property}}:{{value}} incorrect. Example:
       https://api.bettercloud.com/automation/v1
-    resolved: false
     severity: error
     then:
       function: pattern

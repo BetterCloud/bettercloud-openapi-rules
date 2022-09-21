@@ -80,10 +80,18 @@ Meaningful response parameter timestamps must be used in the form of {entity}Tim
 Meaningful response parameter values must be used in the form of {entity}Value. For example - customerValue, displayValue</details>
 <details><summary>responses-must-contain-common-response-200-or-201 (error)</summary>
 Responses must contain at least one 200-level response. For example - 200, 201</details>
+<details><summary>responses-must-contain-common-response-400 (error)</summary>
+Responses must contain common response - 400 (Bad Request)</details>
 <details><summary>responses-must-contain-common-response-401 (error)</summary>
 Responses must contain common response - 401 (Unauthorized)</details>
+<details><summary>responses-must-contain-common-response-403 (error)</summary>
+Responses must contain common response - 403 (Forbidden)</details>
 <details><summary>responses-must-contain-common-response-404 (error)</summary>
 Responses must contain common response - 404 (Not found)</details>
+<details><summary>responses-must-contain-common-response-406 (error)</summary>
+Responses must contain common response - 406 (Not Acceptable)</details>
+<details><summary>responses-must-contain-common-response-415-for-post-and-put (error)</summary>
+Responses must contain common response - 415 (Unsupported Media)</details>
 <details><summary>responses-must-contain-common-response-429 (error)</summary>
 Responses must contain common response - 429 (Too many requests)</details>
 <details><summary>responses-must-contain-common-response-500 (error)</summary>
