@@ -534,4 +534,4 @@ rules:
       function: pattern
       functionOptions:
         match: >-
-          ^((https:\/\/))([a-z-]+)([.]+)(([a-z]*)?)bettercloud.com\/([a-z]{3,})\/v[1-9]+$
+          ^((https:\/\/))([a-z-]+)([.]+)(([a-z]*)?)bettercloud.com\/([a-z-]{3,})\/v[1-9]+$
