@@ -503,19 +503,6 @@ rules:
         function: truthy
       - field: X-Rate-Limit-Reset
         function: truthy
-  responses-must-return-response-body-with-2xx:
-    description: >-
-      Every route returning a http status code of 200 or 201 must have a
-      response body defined.
-    given: >-
-      $.paths[?(!@property.match(/well-known/ig))]..responses[200,201,"200","201"]
-    message: '{{description}}; property {{property}} is missing at path: {{path}}.'
-    severity: error
-    then:
-      - field: content
-        function: truthy
-      - field: description
-        function: truthy
   responses-must-use-media-type-json-content-type:
     description: '''application/json'' is the only acceptable content type.'
     given: $.paths.*.*.responses.*.content
