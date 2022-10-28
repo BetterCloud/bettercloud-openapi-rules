@@ -15,6 +15,7 @@ functions:
   - ensureCommonHttpCodes
   - ensureMeaningfulParameterNames
   - ensureParametersUseRef
+  - ensureWrappedResponses
 rules:
   contact-properties: off
   operation-singular-tag: off
