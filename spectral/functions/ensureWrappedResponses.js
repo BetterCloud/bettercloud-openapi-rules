@@ -3,6 +3,14 @@
  * Ensure all responses are wrapped
  *
  */
-module.exports = (context) => {
-  console.log(context.path);
+const array = 'array'
+module.exports = (input) => {
+  if(array.includes(input)){
+    return [
+      {
+        message:
+            "You must not return a top level array"
+      },
+    ];
+  }
 };
