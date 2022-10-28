@@ -417,7 +417,8 @@ rules:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Value$
   responses-must-be-wrapped:
     description: Your responses must be wrapped
-    given: $.paths..responses[200,201,"200","201"].content.application/json.schema.type
+    given: >-
+      $.paths..responses[200,201,"200","201"].content.application/json.schema.type
     message: '{{description}}. Missing {{property}}.'
     severity: error
     then:

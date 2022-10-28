@@ -3,13 +3,12 @@
  * Ensure all responses are wrapped
  *
  */
-const array = 'array'
+const array = "array";
 module.exports = (input) => {
-  if(array.includes(input)){
+  if (array.includes(input)) {
     return [
       {
-        message:
-            "You must not return a top level array"
+        message: "You must not return a top level array",
       },
     ];
   }
