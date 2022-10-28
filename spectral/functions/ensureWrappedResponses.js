@@ -4,5 +4,5 @@
  *
  */
 module.exports = (context) => {
-    console.log(context.path)
+  console.log(context.path);
 };
