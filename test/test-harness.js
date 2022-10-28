@@ -20,6 +20,7 @@ const testRulesetBaseContent =
   "  - validateOperationIdNaming\n" +
   "  - ensureMeaningfulParameterNames\n" +
   "  - ensureParametersUseRef\n" +
+  "  - ensureWrappedResponses\n" +
   "rules:\n";
 
 const prepareTestRules = (ruleKeyUnderTest) => {

@@ -1,6 +1,6 @@
 const { setupSpectral } = require("./test-harness");
 
-const ruleKeyUnderTest = "headers-must-include-examples";
+const ruleKeyUnderTest = "responses-must-be-wrapped-if-top-array";
 
 let spectral;
 
@@ -12,13 +12,13 @@ describe(ruleKeyUnderTest, () => {
   it("should not return any results for a valid input", async () => {
     const res = await spectral.run({
       paths: {
-        pets: {
-          get: {
-            responses: {
-              200: {
-                headers: {
-                  "X-Rate-Limit-Reset": {
-                    example: "09/14/2018 17:57:24",
+        "/pets": {
+          responses: {
+            200: {
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
                   },
                 },
               },
@@ -31,18 +31,16 @@ describe(ruleKeyUnderTest, () => {
     expect(res).toEqual([]);
   });
 
-  it("Should return an error when a header is missing an example", async () => {
+  it("Should return an error when 'description' is used as a parameter name", async () => {
     const res = await spectral.run({
       paths: {
         "/pets": {
-          get: {
-            responses: {
-              200: {
-                headers: {
-                  "X-Rate-Limit-Reset": {
-                    content: {
-                      "text/plain": {},
-                    },
+          responses: {
+            200: {
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
                   },
                 },
               },
@@ -54,15 +52,16 @@ describe(ruleKeyUnderTest, () => {
     expect(res).toBeDefined();
     expect(res[0]).toMatchObject({
       code: ruleKeyUnderTest,
-      message: "Headers must include examples.; missing X-Rate-Limit-Reset.",
+      message: "You must not return a top level array.",
       path: [
         "paths",
         "/pets",
-        "get",
         "responses",
         "200",
-        "headers",
-        "X-Rate-Limit-Reset",
+        "content",
+        "application/json",
+        "schema",
+        "type",
       ],
       severity: 0,
     });

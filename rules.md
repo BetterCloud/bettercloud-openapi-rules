@@ -78,6 +78,8 @@ Meaningful response parameter ids must be used in the form of {entity}Id. For ex
 Meaningful response parameter timestamps must be used in the form of {entity}Timestamp. For example - createdTimestamp, updatedTimestamp</details>
 <details><summary>response-parameters-must-have-meaningful-value-names (error)</summary>
 Meaningful response parameter values must be used in the form of {entity}Value. For example - customerValue, displayValue</details>
+<details><summary>responses-must-be-wrapped-if-top-array (error)</summary>
+Your responses must be wrapped</details>
 <details><summary>responses-must-contain-common-response-200-or-201 (error)</summary>
 Responses must contain at least one 200-level response. For example - 200, 201</details>
 <details><summary>responses-must-contain-common-response-400 (error)</summary>
