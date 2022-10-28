@@ -415,14 +415,14 @@ rules:
       function: pattern
       functionOptions:
         match: ^[a-z]+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?Value$
-  responses-must-be-wrapped:
+  responses-must-be-wrapped-if-top-array:
     description: Your responses must be wrapped
     given: >-
       $.paths..responses[200,201,"200","201"].content.application/json.schema.type
-    message: '{{description}}. Missing {{property}}.'
+    message: '{{error}}.'
     severity: error
     then:
-      - function: ensureWrappedResponses
+      function: ensureWrappedResponses
   responses-must-contain-common-response-200-or-201:
     description: >-
       Responses must contain at least one 200-level response. For example - 200,

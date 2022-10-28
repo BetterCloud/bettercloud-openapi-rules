@@ -3,9 +3,10 @@
  * Ensure all responses are wrapped
  *
  */
+
 const array = "array";
-module.exports = (input) => {
-  if (array.includes(input)) {
+const ensureWrappedResponses = (param) => {
+  if (array.includes(param)) {
     return [
       {
         message: "You must not return a top level array",
@@ -13,3 +14,4 @@ module.exports = (input) => {
     ];
   }
 };
+export default ensureWrappedResponses;
