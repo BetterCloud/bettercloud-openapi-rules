@@ -98,8 +98,6 @@ Responses must contain common response - 415 (Unsupported Media)</details>
 Responses must contain common response - 429 (Too many requests)</details>
 <details><summary>responses-must-contain-common-response-500 (error)</summary>
 Responses must contain common response - 500 (Server error)</details>
-<details><summary>responses-must-include-ratelimit-headers (error)</summary>
-Response must include ratelimit-x headers.</details>
 <details><summary>responses-must-return-response-body-with-2xx (error)</summary>
 Every route returning a http status code of 200 or 201 must have a response body defined.</details>
 <details><summary>responses-must-use-media-type-json-content-type (error)</summary>
