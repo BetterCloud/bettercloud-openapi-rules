@@ -1,5 +1,6 @@
 extends:
   - spectral:oas
+  - "@stoplight/spectral-owasp-ruleset"
   - ./spectral/ruleset.yml
 
 functionsDir: ./spectral/functions
@@ -19,3 +20,7 @@ functions:
 rules:
   contact-properties: off
   operation-singular-tag: off
+  owasp:api2:2019-jwt-best-practices: off # Cannot read `type` of null, seems to not handle securityScheme $ref
+  owasp:api4:2019-string-restricted: warn
+  owasp:api4:2019-rate-limit-retry-after: warn # don't break the build until we have adopted the real rate limiter
+  owasp:api4:2019-string-limit: warn # don't break the build but warn so that best judgement can be used

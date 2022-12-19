@@ -500,18 +500,6 @@ rules:
     then:
       - field: '500'
         function: truthy
-  responses-must-include-ratelimit-headers:
-    description: Response must include ratelimit-x headers.
-    given: $.paths[*].*.responses.*.headers
-    message: '{{description}}; missing {{property}}.'
-    severity: error
-    then:
-      - field: X-Rate-Limit-ID
-        function: truthy
-      - field: X-Rate-Limit-Remaining
-        function: truthy
-      - field: X-Rate-Limit-Reset
-        function: truthy
   responses-must-return-response-body-with-2xx:
     description: >-
       Every route returning a http status code of 200 or 201 must have a
