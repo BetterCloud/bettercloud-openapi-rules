@@ -1,7 +1,7 @@
 extends:
   - spectral:oas
   - https://unpkg.com/@stoplight/spectral-owasp-ruleset@1.4.0/dist/ruleset.js
-#  - ./spectral/ruleset.yml
+  - ./spectral/ruleset.yml
 
 functionsDir: ./spectral/functions
 
