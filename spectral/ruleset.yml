@@ -15,6 +15,7 @@ functions:
   - ensureMeaningfulParameterNames
   - ensureParametersUseRef
   - ensureWrappedResponses
+  - validatePatternRegex
 rules:
   array-params-must-have-items-with-type:
     description: Array parameters must have an items attribute with a type.

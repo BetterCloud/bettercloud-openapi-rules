@@ -20,6 +20,7 @@
     "@stoplight/spectral-cli": "^6.4.0",
     "js-yaml": "^4.1.0",
     "prettier": "^2.6.2",
+    "safe-regex": "^2.1.1",
     "yaml-sort": "^1.2.1"
   },
   "devDependencies": {

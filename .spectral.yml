@@ -17,6 +17,7 @@ functions:
   - ensureMeaningfulParameterNames
   - ensureParametersUseRef
   - ensureWrappedResponses
+  - validatePatternRegex
 rules:
   contact-properties: off
   operation-singular-tag: off
