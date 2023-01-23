@@ -766,6 +766,7 @@ components:
         petId:
           type: integer
           format: int32
+          pattern: ^([a-b]*)([a-c]*)$
         tag:
           type: string
       example:

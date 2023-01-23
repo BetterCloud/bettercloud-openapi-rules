@@ -294,17 +294,17 @@ rules:
     then:
       - field: $ref
         function: truthy
-  path-responses-must-use-error-object-schema-for-errors:
-    description: >-
-      When responding with a 4xx or 5xx, you must add and use the approved error
-      response in the response schema
-    given: >-
-      $.paths[*].[*].responses["400","401","403","404","429","500"].content['application/json']
-    message: '{{error}}'
-    resolved: false
-    severity: error
-    then:
-      function: ensure4xxAnd5xxUseErrorBody
+  # path-responses-must-use-error-object-schema-for-errors:
+  #   description: >-
+  #     When responding with a 4xx or 5xx, you must add and use the approved error
+  #     response in the response schema
+  #   given: >-
+  #     $.paths[*].[*].responses["400","401","403","404","429","500"].content['application/json']
+  #   message: '{{error}}'
+  #   resolved: false
+  #   severity: error
+  #   then:
+  #     function: ensure4xxAnd5xxUseErrorBody
   path-responses-must-use-qualified-status-codes:
     description: You must only use allowed http response codes
     given: $.paths[*].[*].responses[*]~
@@ -533,3 +533,10 @@ rules:
       functionOptions:
         match: >-
           ^((https:\/\/))([a-z-]+)([.]+)(([a-z]*)?)bettercloud.com\/([a-z-]{3,})\/v[1-9]+$
+  unsafe-regex-pattern:
+    description: Regex patterns must be safe to rpevent ReDos
+    given: $.components.schemas..properties[*]
+    message: '{{error}}'
+    severity: error
+    then:
+      function: validatePatternRegex
