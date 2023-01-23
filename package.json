@@ -20,7 +20,6 @@
     "@stoplight/spectral-cli": "^6.4.0",
     "js-yaml": "^4.1.0",
     "prettier": "^2.6.2",
-    "redos-detector": "^3.2.1",
     "safe-regex": "^2.1.1",
     "yaml-sort": "^1.2.1"
   },
@@ -30,7 +29,8 @@
     "@stoplight/spectral-ruleset-bundler": "^1.5.0",
     "@stoplight/spectral-runtime": "^1.1.2",
     "jest": "^28.1.2",
-    "pre-commit": "^1.2.2"
+    "pre-commit": "^1.2.2",
+    "redos-detector": "^3.2.1"
   },
   "pre-commit": [
     "prettier",
