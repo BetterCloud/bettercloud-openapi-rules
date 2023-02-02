@@ -1,7 +1,7 @@
 extends:
   - spectral:oas
   - https://unpkg.com/@stoplight/spectral-owasp-ruleset@1.4.0/dist/ruleset.js
-  - https://raw.githubusercontent.com/BetterCloud/spectral-redos-detector-ruleset/DEVX-660-test-err/dist/ruleset.js
+  # - https://raw.githubusercontent.com/BetterCloud/spectral-redos-detector-ruleset/main/dist/ruleset.js
   - ./spectral/ruleset.yml
 
 functionsDir: ./spectral/functions
